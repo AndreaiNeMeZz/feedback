@@ -28,6 +28,18 @@
             transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .nps-radio:checked + .nps-label { background-color: #2563eb; color: white; border-color: #2563eb; }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #2563eb;
+            animation: spin 1s ease infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="antialiased text-gray-700">
@@ -37,7 +49,7 @@
             
             <div id="survey-container" class="bg-white rounded-xl shadow-2xl overflow-hidden relative">
                  <!-- Pulsante Lingua -->
-                <div class="absolute top-4 right-4">
+                <div class="absolute top-4 right-4 z-10">
                     <button id="lang-switch" class="text-sm font-semibold text-gray-500 hover:text-blue-600 transition-colors p-2 rounded-md">
                         <span data-lang-key="lang_en">English</span>
                     </button>
@@ -176,233 +188,280 @@
                 </div>
 
                 <!-- Navigazione -->
-                <div class="bg-gray-50 px-8 py-4 flex justify-between items-center">
+                <div id="navigation" class="bg-gray-50 px-8 py-4 flex justify-between items-center">
                     <button id="prevBtn" class="text-gray-600 font-semibold hover:text-gray-800 transition" data-lang-key="prev_btn">Indietro</button>
                     <button id="nextBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition transform hover:scale-105" data-lang-key="next_btn">Avanti</button>
                 </div>
             </div>
 
-            <!-- Schermata di Ringraziamento -->
-            <div id="thank-you-screen" class="hidden text-center bg-white rounded-xl shadow-2xl p-12">
-                 <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <!-- Schermata di Risposta -->
+            <div id="response-screen" class="hidden text-center bg-white rounded-xl shadow-2xl p-12">
+                 <!-- Icona Successo -->
+                 <div id="success-icon" class="hidden w-16 h-16 bg-green-100 text-green-600 rounded-full items-center justify-center mx-auto mb-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
                  </div>
-                 <h2 class="text-3xl font-bold text-gray-800 mb-2" data-lang-key="thanks_title">Grazie!</h2>
-                 <p class="text-gray-600 mb-8" data-lang-key="thanks_subtitle">Il tuo feedback è stato inviato. Ci aiuterà a migliorare ancora.</p>
+                 <!-- Icona Errore -->
+                 <div id="error-icon" class="hidden w-16 h-16 bg-red-100 text-red-600 rounded-full items-center justify-center mx-auto mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                 </div>
+                 <!-- Spinner Caricamento -->
+                 <div id="loading-spinner" class="hidden spinner mx-auto mb-6"></div>
+                 
+                 <h2 id="response-title" class="text-3xl font-bold text-gray-800 mb-2"></h2>
+                 <p id="response-subtitle" class="text-gray-600 mb-8"></p>
                  <button id="resetBtn" class="text-blue-600 font-semibold hover:underline" data-lang-key="reset_btn">Invia un altro feedback</button>
             </div>
 
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- DIZIONARIO TRADUZIONI ---
-            const translations = {
-                it: {
-                    lang_en: "English",
-                    main_title: "Il tuo parere è importante",
-                    main_subtitle: "Dedica un minuto a condividere la tua esperienza.",
-                    step1_title: "Iniziamo...",
-                    company_name_label: "Nome Azienda Cliente",
-                    company_name_placeholder: "Es. Rossi S.p.A.",
-                    exhibition_name_label: "Fiera di riferimento",
-                    exhibition_name_placeholder: "Es. Fiera del Mobile 2025",
-                    step2_title: "Com'è andata l'esperienza generale?",
-                    overall_satisfaction_label: "Soddisfazione Generale del Servizio",
-                    very_satisfied: "Molto Soddisfatto",
-                    satisfied: "Soddisfatto",
-                    fairly_satisfied: "Abbastanza",
-                    not_satisfied: "Per nulla",
-                    designer_experience_label: "Esperienza con il nostro Designer",
-                    excellent: "Eccellente",
-                    good: "Buona",
-                    fair: "Sufficiente",
-                    poor: "Scarsa",
-                    step3_title: "Valuta alcuni aspetti specifici...",
-                    design_quality_label: "Qualità Progettazione",
-                    meeting_needs_label: "Rispondenza Esigenze",
-                    deadlines_label: "Rispetto Tempistiche",
-                    recommend_label: "Probabilità di Raccomandarci",
-                    not_likely: "Per nulla probabile",
-                    extremely_likely: "Estremamente probabile",
-                    step4_title: "Ultime domande...",
-                    experience_feedback_label: "Cosa ti è piaciuto di più della nostra collaborazione?",
-                    improvement_feedback_label: "C'è qualcosa che potremmo migliorare?",
-                    your_answer_placeholder: "La tua risposta...",
-                    suggestion_placeholder: "Ogni suggerimento è prezioso...",
-                    prev_btn: "Indietro",
-                    next_btn: "Avanti",
-                    submit_btn: "Invia",
-                    thanks_title: "Grazie!",
-                    thanks_subtitle: "Il tuo feedback è stato inviato. Ci aiuterà a migliorare ancora.",
-                    reset_btn: "Invia un altro feedback",
-                },
-                en: {
-                    lang_it: "Italiano",
-                    main_title: "Your opinion is important",
-                    main_subtitle: "Take a minute to share your experience.",
-                    step1_title: "Let's start...",
-                    company_name_label: "Company Name",
-                    company_name_placeholder: "E.g. Smith Inc.",
-                    exhibition_name_label: "Exhibition Name",
-                    exhibition_name_placeholder: "E.g. Design Fair 2025",
-                    step2_title: "How was the overall experience?",
-                    overall_satisfaction_label: "Overall Service Satisfaction",
-                    very_satisfied: "Very Satisfied",
-                    satisfied: "Satisfied",
-                    fairly_satisfied: "Fairly",
-                    not_satisfied: "Not at all",
-                    designer_experience_label: "Experience with our Designer",
-                    excellent: "Excellent",
-                    good: "Good",
-                    fair: "Fair",
-                    poor: "Poor",
-                    step3_title: "Please rate some specific aspects...",
-                    design_quality_label: "Design Quality",
-                    meeting_needs_label: "Meeting of Needs",
-                    deadlines_label: "Meeting of Deadlines",
-                    recommend_label: "Likelihood to Recommend",
-                    not_likely: "Not at all likely",
-                    extremely_likely: "Extremely likely",
-                    step4_title: "Last questions...",
-                    experience_feedback_label: "What did you like most about our collaboration?",
-                    improvement_feedback_label: "Is there anything we could improve?",
-                    your_answer_placeholder: "Your answer...",
-                    suggestion_placeholder: "Every suggestion is valuable...",
-                    prev_btn: "Back",
-                    next_btn: "Next",
-                    submit_btn: "Submit",
-                    thanks_title: "Thank you!",
-                    thanks_subtitle: "Your feedback has been submitted. It will help us improve.",
-                    reset_btn: "Submit another feedback",
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Importa le funzioni necessarie dai moduli Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- CONFIGURAZIONE FIREBASE ---
+        // Le variabili __app_id, __firebase_config, e __initial_auth_token sono fornite dall'ambiente.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth, userId;
+
+        try {
+            // Inizializza l'app Firebase
+            const app = initializeApp(firebaseConfig);
+            // Ottieni le istanze di Firestore e Auth
+            db = getFirestore(app);
+            auth = getAuth(app);
+        } catch (e) {
+            console.error("Errore nell'inizializzazione di Firebase:", e);
+            // Potresti mostrare un errore all'utente qui
+        }
+
+        // Gestisce l'autenticazione dell'utente
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Utente già autenticato
+                userId = user.uid;
+                console.log("Utente autenticato:", userId);
+            } else if (initialAuthToken) {
+                // Autenticazione con token custom se disponibile
+                try {
+                    const userCredential = await signInWithCustomToken(auth, initialAuthToken);
+                    userId = userCredential.user.uid;
+                    console.log("Utente autenticato con token custom:", userId);
+                } catch (error) {
+                    console.error("Errore di autenticazione con token custom:", error);
+                    // Fallback su autenticazione anonima
+                    await signInAnonymously(auth);
                 }
-            };
-            
-            let currentLang = 'it';
-
-            const langSwitchBtn = document.getElementById('lang-switch');
-
-            function setLanguage(lang) {
-                currentLang = lang;
-                document.documentElement.lang = lang;
-                
-                // Aggiorna il testo del pulsante di cambio lingua
-                langSwitchBtn.innerHTML = `<span data-lang-key="${lang === 'it' ? 'lang_en' : 'lang_it'}">${lang === 'it' ? 'English' : 'Italiano'}</span>`;
-                
-                // Aggiorna tutti gli elementi con data-lang-key
-                document.querySelectorAll('[data-lang-key]').forEach(el => {
-                    const key = el.dataset.langKey;
-                    if (translations[lang][key]) {
-                        el.textContent = translations[lang][key];
-                    }
-                });
-
-                // Aggiorna i placeholder
-                document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
-                    const key = el.dataset.langPlaceholder;
-                    if (translations[lang][key]) {
-                        el.placeholder = translations[lang][key];
-                    }
-                });
-
-                // Aggiorna il testo del pulsante Avanti/Invia
-                updateButtons();
-            }
-
-            langSwitchBtn.addEventListener('click', () => {
-                const newLang = currentLang === 'it' ? 'en' : 'it';
-                setLanguage(newLang);
-            });
-
-            // --- LOGICA DEL WIZARD ---
-            const steps = document.querySelectorAll('.form-step');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const progressBar = document.getElementById('progress-bar');
-            const form = document.getElementById('wizardForm');
-            const surveyContainer = document.getElementById('survey-container');
-            const thankYouScreen = document.getElementById('thank-you-screen');
-            const resetBtn = document.getElementById('resetBtn');
-
-            let currentStep = 0;
-            const totalSteps = steps.length;
-
-            function updateButtons() {
-                prevBtn.style.visibility = (currentStep === 0) ? 'hidden' : 'visible';
-                
-                if (currentStep === totalSteps - 1) {
-                    nextBtn.textContent = translations[currentLang].submit_btn;
-                } else {
-                    nextBtn.textContent = translations[currentLang].next_btn;
+            } else {
+                // Autenticazione anonima come fallback
+                try {
+                    const userCredential = await signInAnonymously(auth);
+                    userId = userCredential.user.uid;
+                    console.log("Utente autenticato anonimamente:", userId);
+                } catch (error) {
+                    console.error("Errore di autenticazione anonima:", error);
                 }
             }
-            
-            function updateProgressBar() {
-                progressBar.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
-            }
-
-            function showStep(stepIndex) {
-                steps.forEach((step, index) => step.classList.toggle('active', index === stepIndex));
-                currentStep = stepIndex;
-                updateButtons();
-                updateProgressBar();
-            }
-
-            function validateStep(stepIndex) {
-                const currentStepElement = steps[stepIndex];
-                const inputs = currentStepElement.querySelectorAll('input[required], textarea[required]');
-                let isValid = true;
-                
-                inputs.forEach(input => {
-                    if ((input.type === 'text' || input.tagName.toLowerCase() === 'textarea') && !input.value.trim()) {
-                        isValid = false;
-                        input.classList.add('border-red-500', 'focus:ring-red-500');
-                    } else {
-                        input.classList.remove('border-red-500', 'focus:ring-red-500');
-                    }
-                });
-
-                const fieldsets = currentStepElement.querySelectorAll('fieldset');
-                fieldsets.forEach(fieldset => {
-                    const radio = fieldset.querySelector('input[type="radio"][required]');
-                    if (radio && !form.querySelector(`input[name="${radio.name}"]:checked`)) {
-                        isValid = false;
-                        fieldset.classList.add('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
-                    } else if (radio) {
-                        fieldset.classList.remove('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
-                    }
-                });
-                return isValid;
-            }
-
-            nextBtn.addEventListener('click', () => {
-                if (!validateStep(currentStep)) return;
-                if (currentStep < totalSteps - 1) {
-                    showStep(currentStep + 1);
-                } else {
-                    const formData = new FormData(form);
-                    const data = Object.fromEntries(formData.entries());
-                    console.log('Dati del modulo inviati:', data);
-                    surveyContainer.style.display = 'none';
-                    thankYouScreen.style.display = 'block';
-                }
-            });
-
-            prevBtn.addEventListener('click', () => {
-                if (currentStep > 0) showStep(currentStep - 1);
-            });
-            
-            resetBtn.addEventListener('click', () => {
-                form.reset();
-                showStep(0);
-                thankYouScreen.style.display = 'none';
-                surveyContainer.style.display = 'block';
-            });
-
-            // Inizializzazione
-            setLanguage('it'); // Imposta la lingua iniziale
         });
+
+
+        // --- DIZIONARIO TRADUZIONI ---
+        const translations = {
+            it: {
+                lang_en: "English", main_title: "Il tuo parere è importante", main_subtitle: "Dedica un minuto a condividere la tua esperienza.",
+                step1_title: "Iniziamo...", company_name_label: "Nome Azienda Cliente", company_name_placeholder: "Es. Rossi S.p.A.",
+                exhibition_name_label: "Fiera di riferimento", exhibition_name_placeholder: "Es. Fiera del Mobile 2025",
+                step2_title: "Com'è andata l'esperienza generale?", overall_satisfaction_label: "Soddisfazione Generale del Servizio",
+                very_satisfied: "Molto Soddisfatto", satisfied: "Soddisfatto", fairly_satisfied: "Abbastanza", not_satisfied: "Per nulla",
+                designer_experience_label: "Esperienza con il nostro Designer", excellent: "Eccellente", good: "Buona", fair: "Sufficiente", poor: "Scarsa",
+                step3_title: "Valuta alcuni aspetti specifici...", design_quality_label: "Qualità Progettazione", meeting_needs_label: "Rispondenza Esigenze",
+                deadlines_label: "Rispetto Tempistiche", recommend_label: "Probabilità di Raccomandarci", not_likely: "Per nulla probabile", extremely_likely: "Estremamente probabile",
+                step4_title: "Ultime domande...", experience_feedback_label: "Cosa ti è piaciuto di più della nostra collaborazione?",
+                improvement_feedback_label: "C'è qualcosa che potremmo migliorare?", your_answer_placeholder: "La tua risposta...",
+                suggestion_placeholder: "Ogni suggerimento è prezioso...", prev_btn: "Indietro", next_btn: "Avanti", submit_btn: "Invia",
+                thanks_title: "Grazie!", thanks_subtitle: "Il tuo feedback è stato inviato. Ci aiuterà a migliorare ancora.",
+                reset_btn: "Invia un altro feedback", submission_loading: "Invio in corso...",
+                error_title: "Errore", error_subtitle: "Non è stato possibile inviare il tuo feedback. Riprova più tardi."
+            },
+            en: {
+                lang_it: "Italiano", main_title: "Your opinion is important", main_subtitle: "Take a minute to share your experience.",
+                step1_title: "Let's start...", company_name_label: "Company Name", company_name_placeholder: "E.g. Smith Inc.",
+                exhibition_name_label: "Exhibition Name", exhibition_name_placeholder: "E.g. Design Fair 2025",
+                step2_title: "How was the overall experience?", overall_satisfaction_label: "Overall Service Satisfaction",
+                very_satisfied: "Very Satisfied", satisfied: "Satisfied", fairly_satisfied: "Fairly", not_satisfied: "Not at all",
+                designer_experience_label: "Experience with our Designer", excellent: "Excellent", good: "Good", fair: "Fair", poor: "Poor",
+                step3_title: "Please rate some specific aspects...", design_quality_label: "Design Quality", meeting_needs_label: "Meeting of Needs",
+                deadlines_label: "Meeting of Deadlines", recommend_label: "Likelihood to Recommend", not_likely: "Not at all likely", extremely_likely: "Extremely likely",
+                step4_title: "Last questions...", experience_feedback_label: "What did you like most about our collaboration?",
+                improvement_feedback_label: "Is there anything we could improve?", your_answer_placeholder: "Your answer...",
+                suggestion_placeholder: "Every suggestion is valuable...", prev_btn: "Back", next_btn: "Next", submit_btn: "Submit",
+                thanks_title: "Thank you!", thanks_subtitle: "Your feedback has been submitted. It will help us improve.",
+                reset_btn: "Submit another feedback", submission_loading: "Submitting...",
+                error_title: "Error", error_subtitle: "Could not submit your feedback. Please try again later."
+            }
+        };
+        
+        let currentLang = 'it';
+        const langSwitchBtn = document.getElementById('lang-switch');
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            langSwitchBtn.innerHTML = `<span data-lang-key="${lang === 'it' ? 'lang_en' : 'lang_it'}">${translations[lang][lang === 'it' ? 'lang_en' : 'lang_it']}</span>`;
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.dataset.langKey;
+                if (translations[lang][key]) el.textContent = translations[lang][key];
+            });
+            document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
+                const key = el.dataset.langPlaceholder;
+                if (translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+            updateButtons();
+        }
+
+        langSwitchBtn.addEventListener('click', () => setLanguage(currentLang === 'it' ? 'en' : 'it'));
+
+        // --- LOGICA DEL WIZARD ---
+        const steps = document.querySelectorAll('.form-step');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progress-bar');
+        const form = document.getElementById('wizardForm');
+        const surveyContainer = document.getElementById('survey-container');
+        const responseScreen = document.getElementById('response-screen');
+        const resetBtn = document.getElementById('resetBtn');
+        const navigation = document.getElementById('navigation');
+
+        let currentStep = 0;
+        const totalSteps = steps.length;
+
+        function updateButtons() {
+            prevBtn.style.visibility = (currentStep === 0) ? 'hidden' : 'visible';
+            nextBtn.textContent = (currentStep === totalSteps - 1) ? translations[currentLang].submit_btn : translations[currentLang].next_btn;
+        }
+        
+        function updateProgressBar() {
+            progressBar.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
+        }
+
+        function showStep(stepIndex) {
+            steps.forEach((step, index) => step.classList.toggle('active', index === stepIndex));
+            currentStep = stepIndex;
+            updateButtons();
+            updateProgressBar();
+        }
+
+        function validateStep(stepIndex) {
+            const currentStepElement = steps[stepIndex];
+            const inputs = currentStepElement.querySelectorAll('input[required], textarea[required]');
+            let isValid = true;
+            inputs.forEach(input => {
+                if ((input.type === 'text' || input.tagName.toLowerCase() === 'textarea') && !input.value.trim()) {
+                    isValid = false;
+                    input.classList.add('border-red-500', 'focus:ring-red-500');
+                } else {
+                    input.classList.remove('border-red-500', 'focus:ring-red-500');
+                }
+            });
+            const fieldsets = currentStepElement.querySelectorAll('fieldset');
+            fieldsets.forEach(fieldset => {
+                const radio = fieldset.querySelector('input[type="radio"][required]');
+                if (radio && !form.querySelector(`input[name="${radio.name}"]:checked`)) {
+                    isValid = false;
+                    fieldset.classList.add('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
+                } else if (radio) {
+                    fieldset.classList.remove('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
+                }
+            });
+            return isValid;
+        }
+
+        function showResponseScreen(state) {
+            surveyContainer.style.display = 'none';
+            responseScreen.style.display = 'block';
+
+            // Nascondi tutti gli elementi di stato
+            document.getElementById('success-icon').style.display = 'none';
+            document.getElementById('error-icon').style.display = 'none';
+            document.getElementById('loading-spinner').style.display = 'none';
+
+            const title = document.getElementById('response-title');
+            const subtitle = document.getElementById('response-subtitle');
+
+            switch (state) {
+                case 'loading':
+                    document.getElementById('loading-spinner').style.display = 'block';
+                    title.textContent = translations[currentLang].submission_loading;
+                    subtitle.textContent = '...';
+                    resetBtn.style.display = 'none';
+                    break;
+                case 'success':
+                    document.getElementById('success-icon').style.display = 'flex';
+                    title.textContent = translations[currentLang].thanks_title;
+                    subtitle.textContent = translations[currentLang].thanks_subtitle;
+                    resetBtn.style.display = 'inline-block';
+                    break;
+                case 'error':
+                    document.getElementById('error-icon').style.display = 'flex';
+                    title.textContent = translations[currentLang].error_title;
+                    subtitle.textContent = translations[currentLang].error_subtitle;
+                    resetBtn.style.display = 'inline-block';
+                    break;
+            }
+        }
+
+        async function submitFormToFirebase() {
+            if (!db || !userId) {
+                console.error("Firebase non è inizializzato o l'utente non è autenticato.");
+                showResponseScreen('error');
+                return;
+            }
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            data.submittedAt = serverTimestamp(); // Aggiunge un timestamp del server
+            data.language = currentLang; // Salva la lingua di compilazione
+
+            try {
+                // Salva i dati in una collezione specifica per l'utente
+                const docRef = await addDoc(collection(db, "artifacts", appId, "users", userId, "survey_responses"), data);
+                console.log("Documento scritto con ID: ", docRef.id);
+                showResponseScreen('success');
+            } catch (e) {
+                console.error("Errore durante l'aggiunta del documento: ", e);
+                showResponseScreen('error');
+            }
+        }
+
+        nextBtn.addEventListener('click', async () => {
+            if (!validateStep(currentStep)) return;
+            if (currentStep < totalSteps - 1) {
+                showStep(currentStep + 1);
+            } else {
+                showResponseScreen('loading');
+                await submitFormToFirebase();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 0) showStep(currentStep - 1);
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            form.reset();
+            responseScreen.style.display = 'none';
+            surveyContainer.style.display = 'block';
+            showStep(0);
+        });
+
+        // Inizializzazione
+        setLanguage('it');
     </script>
 </body>
 </html>
