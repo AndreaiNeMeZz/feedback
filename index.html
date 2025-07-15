@@ -219,14 +219,21 @@
     <script type="module">
         // Importa le funzioni necessarie dai moduli Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- CONFIGURAZIONE FIREBASE ---
-        // Le variabili __app_id, __firebase_config, e __initial_auth_token sono fornite dall'ambiente.
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        // Queste sono le credenziali del TUO progetto Firebase.
+        const firebaseConfig = {
+            apiKey: "AIzaSyDCOO9utxlPoDM0BOh7NlcV4I6tc_aZnFw",
+            authDomain: "sondaggio-clienti.firebaseapp.com",
+            projectId: "sondaggio-clienti",
+            storageBucket: "sondaggio-clienti.appspot.com", // Corretto .appspot.com
+            messagingSenderId: "924437595625",
+            appId: "1:924437595625:web:736fc89a06288da063b778"
+        };
+        
+        const appId = firebaseConfig.projectId; // Usiamo il projectId per la coerenza del percorso dati
 
         let db, auth, userId;
 
@@ -238,7 +245,6 @@
             auth = getAuth(app);
         } catch (e) {
             console.error("Errore nell'inizializzazione di Firebase:", e);
-            // Potresti mostrare un errore all'utente qui
         }
 
         // Gestisce l'autenticazione dell'utente
@@ -247,19 +253,8 @@
                 // Utente già autenticato
                 userId = user.uid;
                 console.log("Utente autenticato:", userId);
-            } else if (initialAuthToken) {
-                // Autenticazione con token custom se disponibile
-                try {
-                    const userCredential = await signInWithCustomToken(auth, initialAuthToken);
-                    userId = userCredential.user.uid;
-                    console.log("Utente autenticato con token custom:", userId);
-                } catch (error) {
-                    console.error("Errore di autenticazione con token custom:", error);
-                    // Fallback su autenticazione anonima
-                    await signInAnonymously(auth);
-                }
             } else {
-                // Autenticazione anonima come fallback
+                // Autenticazione anonima se non c'è un utente
                 try {
                     const userCredential = await signInAnonymously(auth);
                     userId = userCredential.user.uid;
@@ -386,7 +381,6 @@
             surveyContainer.style.display = 'none';
             responseScreen.style.display = 'block';
 
-            // Nascondi tutti gli elementi di stato
             document.getElementById('success-icon').style.display = 'none';
             document.getElementById('error-icon').style.display = 'none';
             document.getElementById('loading-spinner').style.display = 'none';
@@ -425,12 +419,13 @@
 
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
-            data.submittedAt = serverTimestamp(); // Aggiunge un timestamp del server
-            data.language = currentLang; // Salva la lingua di compilazione
+            data.submittedAt = serverTimestamp();
+            data.language = currentLang;
 
             try {
-                // Salva i dati in una collezione specifica per l'utente
-                const docRef = await addDoc(collection(db, "artifacts", appId, "users", userId, "survey_responses"), data);
+                // Il percorso ora è più semplice, ma funziona con la Cloud Function
+                // perché la funzione non dipende più da un "appId" hardcodato.
+                const docRef = await addDoc(collection(db, "survey_responses"), data);
                 console.log("Documento scritto con ID: ", docRef.id);
                 showResponseScreen('success');
             } catch (e) {
@@ -460,7 +455,6 @@
             showStep(0);
         });
 
-        // Inizializzazione
         setLanguage('it');
     </script>
 </body>
