@@ -3,267 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sondaggio di Soddisfazione Cliente</title>
+    <title>Feedback sull'Evento</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Stile di base per il font */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3e8ff; /* Sfondo viola chiaro per abbinare il tema */
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7fafc;
         }
-        /* Stile per nascondere i radio button nativi e usare cerchi personalizzati */
-        .custom-radio {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            width: 1.25rem;
-            height: 1.25rem;
-            border: 2px solid #d1d5db;
-            border-radius: 50%;
-            outline: none;
-            transition: all 0.2s;
-            cursor: pointer;
+        .form-step { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .form-step.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .custom-radio:checked {
-            border-color: #6d28d9; /* Viola scuro */
-            background-color: #6d28d9;
-            box-shadow: 0 0 0 3px white, 0 0 0 5px #6d28d9;
+        .rating-radio-label { transition: all 0.2s ease-in-out; }
+        .rating-radio:checked + .rating-radio-label {
+            background-color: #2563eb; color: white; border-color: #2563eb;
+            transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        /* Stile per la tabella delle valutazioni specifiche su schermi piccoli */
-        @media (max-width: 640px) {
-            .table-responsive {
-                display: block;
-                width: 100%;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            .table-responsive th,
-            .table-responsive td {
-                white-space: nowrap;
-            }
-            .table-responsive th:first-child,
-            .table-responsive td:first-child {
-                position: sticky;
-                left: 0;
-                background-color: white;
-                z-index: 1;
-            }
-        }
+        .nps-radio:checked + .nps-label { background-color: #2563eb; color: white; border-color: #2563eb; }
     </style>
 </head>
-<body class="antialiased text-gray-800">
+<body class="antialiased text-gray-700">
 
-    <div class="container mx-auto px-4 py-8 md:py-12 max-w-3xl">
-
-        <!-- Card Intestazione -->
-        <div class="bg-white border-t-8 border-violet-700 rounded-lg shadow-lg p-8 mb-6">
-            <h1 class="text-3xl font-bold text-gray-900 mb-4">Sondaggio di Soddisfazione Cliente</h1>
-            <div class="text-gray-700 space-y-4">
-                <p>
-                    Gentile Cliente,<br>
-                    Grazie per aver scelto Emotiva Design per la progettazione e realizzazione del Suo stand fieristico. Le chiediamo gentilmente di dedicare alcuni minuti per compilare questo breve modulo. Il Suo parere è per noi prezioso e ci aiuterà a migliorare costantemente i nostri servizi per tutti gli eventi a cui partecipiamo.
-                </p>
-                <p>
-                    Cordiali saluti,<br>
-                    Il Team di Emotiva Design
-                </p>
-                <hr class="my-4">
-                <p class="text-sm text-gray-600">
-                    Dear Client,<br>
-                    Thank you for choosing Emotiva Design for the design and construction of your exhibition stand. We kindly ask you to dedicate a few minutes to complete this short form. Your feedback is precious to us and will help us to continually improve our services for all the events we participate in.
-                </p>
-                 <p class="text-sm text-gray-600">
-                    King regards,<br>
-                    The Emotiva Design Team
-                </p>
-            </div>
-            <p class="text-red-600 text-sm mt-6">* Indica una domanda obbligatoria</p>
-        </div>
-
-        <!-- Inizio del Form -->
-        <form id="satisfactionForm" class="space-y-6">
-
-            <!-- Nome Azienda -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <label for="company_name" class="block text-lg font-semibold text-gray-900 mb-2">Nome Azienda Cliente / Company Name <span class="text-red-600">*</span></label>
-                <input type="text" id="company_name" name="company_name" required class="w-full mt-2 p-3 border-b-2 border-gray-300 focus:border-violet-700 outline-none transition" placeholder="La tua risposta">
-            </div>
-
-            <!-- Fiera di riferimento -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <label for="exhibition_name" class="block text-lg font-semibold text-gray-900 mb-2">Fiera di riferimento / Exhibition Name <span class="text-red-600">*</span></label>
-                <input type="text" id="exhibition_name" name="exhibition_name" required class="w-full mt-2 p-3 border-b-2 border-gray-300 focus:border-violet-700 outline-none transition" placeholder="La tua risposta">
-            </div>
-
-            <!-- Soddisfazione Generale -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <fieldset>
-                    <legend class="text-lg font-semibold text-gray-900 mb-4">Soddisfazione Generale del Servizio / Overall Service Satisfaction <span class="text-red-600">*</span></legend>
-                    <div class="space-y-4">
-                        <div class="flex items-center"><input type="radio" id="overall_very_satisfied" name="overall_satisfaction" value="Molto Soddisfatto" required class="custom-radio mr-3"><label for="overall_very_satisfied">Molto Soddisfatto/Very Satisfied</label></div>
-                        <div class="flex items-center"><input type="radio" id="overall_satisfied" name="overall_satisfaction" value="Soddisfatto" class="custom-radio mr-3"><label for="overall_satisfied">Soddisfatto/Satisfied</label></div>
-                        <div class="flex items-center"><input type="radio" id="overall_fairly_satisfied" name="overall_satisfaction" value="Abbastanza Soddisfatto" class="custom-radio mr-3"><label for="overall_fairly_satisfied">Abbastanza Soddisfatto/Fairly Satisfied</label></div>
-                        <div class="flex items-center"><input type="radio" id="overall_not_satisfied" name="overall_satisfaction" value="Non Soddisfatto" class="custom-radio mr-3"><label for="overall_not_satisfied">Non Soddisfatto/Not Satisfied</label></div>
-                    </div>
-                </fieldset>
-            </div>
+    <div class="container mx-auto px-4 py-8 md:py-16 flex items-center justify-center min-h-screen">
+        <div class="w-full max-w-2xl">
             
-            <!-- Esperienza con il Designer -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <fieldset>
-                    <legend class="text-lg font-semibold text-gray-900 mb-4">Qual è stata la tua esperienza con il nostro Designer per questo progetto? / What was your experience like with our Designer on this project? <span class="text-red-600">*</span></legend>
-                    <div class="space-y-4">
-                        <div class="flex items-center"><input type="radio" id="designer_very_satisfied" name="designer_experience" value="Molto Soddisfatto" required class="custom-radio mr-3"><label for="designer_very_satisfied">Molto Soddisfatto/Very Satisfied</label></div>
-                        <div class="flex items-center"><input type="radio" id="designer_satisfied" name="designer_experience" value="Soddisfatto" class="custom-radio mr-3"><label for="designer_satisfied">Soddisfatto/Satisfied</label></div>
-                        <div class="flex items-center"><input type="radio" id="designer_fairly_satisfied" name="designer_experience" value="Abbastanza Soddisfatto" class="custom-radio mr-3"><label for="designer_fairly_satisfied">Abbastanza Soddisfatto/Fairly Satisfied</label></div>
-                        <div class="flex items-center"><input type="radio" id="designer_not_satisfied" name="designer_experience" value="Non Soddisfatto" class="custom-radio mr-3"><label for="designer_not_satisfied">Non Soddisfatto/Not Satisfied</label></div>
-                    </div>
-                </fieldset>
-            </div>
-
-            <!-- Probabilità di Raccomandarci -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <fieldset>
-                    <legend class="text-lg font-semibold text-gray-900 mb-4">Probabilità di Raccomandarci / Likelihood to Recommend</legend>
-                    <div class="flex flex-col sm:flex-row justify-between items-center mt-4">
-                        <span class="text-gray-600 mb-2 sm:mb-0 text-center">Per nulla probabile/Not at all likely</span>
-                        <div class="flex items-center space-x-4 md:space-x-6">
-                            <div class="text-center"><label for="recommend_1">1</label><input type="radio" id="recommend_1" name="recommend_likelihood" value="1" class="custom-radio block mx-auto mt-1"></div>
-                            <div class="text-center"><label for="recommend_2">2</label><input type="radio" id="recommend_2" name="recommend_likelihood" value="2" class="custom-radio block mx-auto mt-1"></div>
-                            <div class="text-center"><label for="recommend_3">3</label><input type="radio" id="recommend_3" name="recommend_likelihood" value="3" class="custom-radio block mx-auto mt-1"></div>
-                            <div class="text-center"><label for="recommend_4">4</label><input type="radio" id="recommend_4" name="recommend_likelihood" value="4" class="custom-radio block mx-auto mt-1"></div>
-                            <div class="text-center"><label for="recommend_5">5</label><input type="radio" id="recommend_5" name="recommend_likelihood" value="5" class="custom-radio block mx-auto mt-1"></div>
+            <div id="survey-container" class="bg-white rounded-xl shadow-2xl overflow-hidden relative">
+                 <!-- Pulsante Lingua -->
+                <div class="absolute top-4 right-4">
+                    <button id="lang-switch" class="text-sm font-semibold text-gray-500 hover:text-blue-600 transition-colors p-2 rounded-md">
+                        <span data-lang-key="lang_en">English</span>
+                    </button>
+                </div>
+                
+                <div class="p-8 pt-16">
+                    <!-- Intestazione e Barra di Avanzamento -->
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 text-center mb-2" data-lang-key="main_title">Il tuo parere è importante</h2>
+                        <p class="text-center text-gray-500 mb-6" data-lang-key="main_subtitle">Dedica un minuto a condividere la tua esperienza.</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 25%"></div>
                         </div>
-                        <span class="text-gray-600 mt-2 sm:mt-0 text-center">Estremamente probabile/Extremely likely</span>
                     </div>
-                </fieldset>
+
+                    <!-- Form a Passaggi -->
+                    <form id="wizardForm">
+                        <!-- Step 1: Info Base -->
+                        <div id="step-1" class="form-step active">
+                            <h3 class="font-semibold text-xl text-gray-800 mb-6" data-lang-key="step1_title">Iniziamo...</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label for="company_name" class="block text-sm font-medium text-gray-600 mb-1"><span data-lang-key="company_name_label">Nome Azienda Cliente</span> <span class="text-red-500">*</span></label>
+                                    <input type="text" id="company_name" name="company_name" required class="w-full p-3 bg-gray-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" data-lang-placeholder="company_name_placeholder">
+                                </div>
+                                <div>
+                                    <label for="exhibition_name" class="block text-sm font-medium text-gray-600 mb-1"><span data-lang-key="exhibition_name_label">Fiera di riferimento</span> <span class="text-red-500">*</span></label>
+                                    <input type="text" id="exhibition_name" name="exhibition_name" required class="w-full p-3 bg-gray-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" data-lang-placeholder="exhibition_name_placeholder">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Soddisfazione Generale -->
+                        <div id="step-2" class="form-step">
+                             <h3 class="font-semibold text-xl text-gray-800 mb-6" data-lang-key="step2_title">Com'è andata l'esperienza generale?</h3>
+                             <div class="space-y-6">
+                                <fieldset>
+                                    <legend class="block text-sm font-medium text-gray-600 mb-2"><span data-lang-key="overall_satisfaction_label">Soddisfazione Generale del Servizio</span> <span class="text-red-500">*</span></legend>
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                        <div><input type="radio" name="overall_satisfaction" id="os_1" value="Molto Soddisfatto" required class="sr-only rating-radio"><label for="os_1" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="very_satisfied">Molto Soddisfatto</label></div>
+                                        <div><input type="radio" name="overall_satisfaction" id="os_2" value="Soddisfatto" class="sr-only rating-radio"><label for="os_2" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="satisfied">Soddisfatto</label></div>
+                                        <div><input type="radio" name="overall_satisfaction" id="os_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="os_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
+                                        <div><input type="radio" name="overall_satisfaction" id="os_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="os_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend class="block text-sm font-medium text-gray-600 mb-2"><span data-lang-key="designer_experience_label">Esperienza con il nostro Designer</span> <span class="text-red-500">*</span></legend>
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                        <div><input type="radio" name="designer_experience" id="de_1" value="Molto Soddisfatto" required class="sr-only rating-radio"><label for="de_1" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="excellent">Eccellente</label></div>
+                                        <div><input type="radio" name="designer_experience" id="de_2" value="Soddisfatto" class="sr-only rating-radio"><label for="de_2" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="good">Buona</label></div>
+                                        <div><input type="radio" name="designer_experience" id="de_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="de_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fair">Sufficiente</label></div>
+                                        <div><input type="radio" name="designer_experience" id="de_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="de_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="poor">Scarsa</label></div>
+                                    </div>
+                                </fieldset>
+                             </div>
+                        </div>
+
+                        <!-- Step 3: Valutazioni Specifiche -->
+                        <div id="step-3" class="form-step">
+                            <h3 class="font-semibold text-xl text-gray-800 mb-6" data-lang-key="step3_title">Valuta alcuni aspetti specifici...</h3>
+                            <div class="space-y-8">
+                                <fieldset>
+                                    <legend class="block text-sm font-medium text-gray-600 mb-3"><span data-lang-key="design_quality_label">Qualità Progettazione</span> <span class="text-red-500">*</span></legend>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="poor">Scarsa</span>
+                                        <div class="flex justify-center items-center w-3/5 space-x-2">
+                                            <div><input type="radio" name="design_quality" id="dq_1" value="1" required class="sr-only nps-radio"><label for="dq_1" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">1</label></div>
+                                            <div><input type="radio" name="design_quality" id="dq_2" value="2" class="sr-only nps-radio"><label for="dq_2" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">2</label></div>
+                                            <div><input type="radio" name="design_quality" id="dq_3" value="3" class="sr-only nps-radio"><label for="dq_3" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">3</label></div>
+                                            <div><input type="radio" name="design_quality" id="dq_4" value="4" class="sr-only nps-radio"><label for="dq_4" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">4</label></div>
+                                            <div><input type="radio" name="design_quality" id="dq_5" value="5" class="sr-only nps-radio"><label for="dq_5" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">5</label></div>
+                                        </div>
+                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="excellent">Eccellente</span>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend class="block text-sm font-medium text-gray-600 mb-3"><span data-lang-key="meeting_needs_label">Rispondenza Esigenze</span> <span class="text-red-500">*</span></legend>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="poor">Scarsa</span>
+                                        <div class="flex justify-center items-center w-3/5 space-x-2">
+                                            <div><input type="radio" name="meeting_needs" id="mn_1" value="1" required class="sr-only nps-radio"><label for="mn_1" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">1</label></div>
+                                            <div><input type="radio" name="meeting_needs" id="mn_2" value="2" class="sr-only nps-radio"><label for="mn_2" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">2</label></div>
+                                            <div><input type="radio" name="meeting_needs" id="mn_3" value="3" class="sr-only nps-radio"><label for="mn_3" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">3</label></div>
+                                            <div><input type="radio" name="meeting_needs" id="mn_4" value="4" class="sr-only nps-radio"><label for="mn_4" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">4</label></div>
+                                            <div><input type="radio" name="meeting_needs" id="mn_5" value="5" class="sr-only nps-radio"><label for="mn_5" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">5</label></div>
+                                        </div>
+                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="excellent">Eccellente</span>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend class="block text-sm font-medium text-gray-600 mb-3"><span data-lang-key="deadlines_label">Rispetto Tempistiche</span> <span class="text-red-500">*</span></legend>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="poor">Scarso</span>
+                                        <div class="flex justify-center items-center w-3/5 space-x-2">
+                                            <div><input type="radio" name="meeting_deadlines" id="md_1" value="1" required class="sr-only nps-radio"><label for="md_1" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">1</label></div>
+                                            <div><input type="radio" name="meeting_deadlines" id="md_2" value="2" class="sr-only nps-radio"><label for="md_2" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">2</label></div>
+                                            <div><input type="radio" name="meeting_deadlines" id="md_3" value="3" class="sr-only nps-radio"><label for="md_3" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">3</label></div>
+                                            <div><input type="radio" name="meeting_deadlines" id="md_4" value="4" class="sr-only nps-radio"><label for="md_4" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">4</label></div>
+                                            <div><input type="radio" name="meeting_deadlines" id="md_5" value="5" class="sr-only nps-radio"><label for="md_5" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">5</label></div>
+                                        </div>
+                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="excellent">Eccellente</span>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend class="block text-sm font-medium text-gray-600 mb-3"><span data-lang-key="recommend_label">Probabilità di Raccomandarci</span> <span class="text-red-500">*</span></legend>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="not_likely">Per nulla probabile</span>
+                                        <div class="flex justify-center items-center w-3/5 space-x-2">
+                                            <div><input type="radio" name="recommend_likelihood" id="nps_1" value="1" required class="sr-only nps-radio"><label for="nps_1" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">1</label></div>
+                                            <div><input type="radio" name="recommend_likelihood" id="nps_2" value="2" class="sr-only nps-radio"><label for="nps_2" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">2</label></div>
+                                            <div><input type="radio" name="recommend_likelihood" id="nps_3" value="3" class="sr-only nps-radio"><label for="nps_3" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">3</label></div>
+                                            <div><input type="radio" name="recommend_likelihood" id="nps_4" value="4" class="sr-only nps-radio"><label for="nps_4" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">4</label></div>
+                                            <div><input type="radio" name="recommend_likelihood" id="nps_5" value="5" class="sr-only nps-radio"><label for="nps_5" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">5</label></div>
+                                        </div>
+                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="extremely_likely">Estremamente probabile</span>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Feedback Aperto -->
+                        <div id="step-4" class="form-step">
+                            <h3 class="font-semibold text-xl text-gray-800 mb-6" data-lang-key="step4_title">Ultime domande...</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label for="experience_feedback" class="block text-sm font-medium text-gray-600 mb-1"><span data-lang-key="experience_feedback_label">Cosa ti è piaciuto di più della nostra collaborazione?</span> <span class="text-red-500">*</span></label>
+                                    <textarea id="experience_feedback" name="experience_feedback" rows="3" required class="w-full p-3 bg-gray-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" data-lang-placeholder="your_answer_placeholder"></textarea>
+                                </div>
+                                <div>
+                                    <label for="improvement_feedback" class="block text-sm font-medium text-gray-600 mb-1"><span data-lang-key="improvement_feedback_label">C'è qualcosa che potremmo migliorare?</span> <span class="text-red-500">*</span></label>
+                                    <textarea id="improvement_feedback" name="improvement_feedback" rows="3" required class="w-full p-3 bg-gray-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" data-lang-placeholder="suggestion_placeholder"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Navigazione -->
+                <div class="bg-gray-50 px-8 py-4 flex justify-between items-center">
+                    <button id="prevBtn" class="text-gray-600 font-semibold hover:text-gray-800 transition" data-lang-key="prev_btn">Indietro</button>
+                    <button id="nextBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition transform hover:scale-105" data-lang-key="next_btn">Avanti</button>
+                </div>
             </div>
 
-            <!-- Valutazioni Specifiche -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <fieldset>
-                    <legend class="text-lg font-semibold text-gray-900 mb-4">Valutazioni specifiche / Specific Ratings <span class="text-red-600">*</span></legend>
-                    <div class="table-responsive">
-                        <table class="w-full text-center mt-4">
-                            <thead>
-                                <tr>
-                                    <th class="text-left font-medium text-gray-600 pb-4"></th>
-                                    <th class="font-medium text-gray-600 pb-4 px-2">Molto Soddisfatto/Very Satisfied</th>
-                                    <th class="font-medium text-gray-600 pb-4 px-2">Soddisfatto/Satisfied</th>
-                                    <th class="font-medium text-gray-600 pb-4 px-2">Abbastanza Soddisfatto/Fairly Satisfied</th>
-                                    <th class="font-medium text-gray-600 pb-4 px-2">Non Soddisfatto/Not Satisfied</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-t">
-                                    <td class="text-left py-4 pr-4 font-medium">Qualità Progettazione/Design Quality</td>
-                                    <td class="py-4"><input type="radio" name="design_quality" value="Molto Soddisfatto" required class="custom-radio mx-auto"></td>
-                                    <td class="py-4"><input type="radio" name="design_quality" value="Soddisfatto" class="custom-radio mx-auto"></td>
-                                    <td class="py-4"><input type="radio" name="design_quality" value="Abbastanza Soddisfatto" class="custom-radio mx-auto"></td>
-                                    <td class="py-4"><input type="radio" name="design_quality" value="Non Soddisfatto" class="custom-radio mx-auto"></td>
-                                </tr>
-                                <tr class="border-t">
-                                    <td class="text-left py-4 pr-4 font-medium">Rispondenza Esigenze/Meeting of Needs</td>
-                                    <td class="py-4"><input type="radio" name="meeting_needs" value="Molto Soddisfatto" required class="custom-radio mx-auto"></td>
-                                    <td class="py-4"><input type="radio" name="meeting_needs" value="Soddisfatto" class="custom-radio mx-auto"></td>
-                                    <td class="py-4"><input type="radio" name="meeting_needs" value="Abbastanza Soddisfatto" class="custom-radio mx-auto"></td>
-                                    <td class="py-4"><input type="radio" name="meeting_needs" value="Non Soddisfatto" class="custom-radio mx-auto"></td>
-                                </tr>
-                                <tr class="border-t">
-                                    <td class="text-left py-4 pr-4 font-medium">Rispetto delle Tempistiche/Meeting of Deadlines</td>
-                                    <td class="py-4"><input type="radio" name="meeting_deadlines" value="Molto Soddisfatto" required class="custom-radio mx-auto"></td>
-                                    <td class="py-4"><input type="radio" name="meeting_deadlines" value="Soddisfatto" class="custom-radio mx-auto"></td>
-                                    <td class="py-4"><input type="radio" name="meeting_deadlines" value="Abbastanza Soddisfatto" class="custom-radio mx-auto"></td>
-                                    <td class="py-4"><input type="radio" name="meeting_deadlines" value="Non Soddisfatto" class="custom-radio mx-auto"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </fieldset>
+            <!-- Schermata di Ringraziamento -->
+            <div id="thank-you-screen" class="hidden text-center bg-white rounded-xl shadow-2xl p-12">
+                 <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                 </div>
+                 <h2 class="text-3xl font-bold text-gray-800 mb-2" data-lang-key="thanks_title">Grazie!</h2>
+                 <p class="text-gray-600 mb-8" data-lang-key="thanks_subtitle">Il tuo feedback è stato inviato. Ci aiuterà a migliorare ancora.</p>
+                 <button id="resetBtn" class="text-blue-600 font-semibold hover:underline" data-lang-key="reset_btn">Invia un altro feedback</button>
             </div>
 
-            <!-- Come vi siete trovati? -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <label for="experience_feedback" class="block text-lg font-semibold text-gray-900 mb-2">Come vi siete trovati? / How was your experience? <span class="text-red-600">*</span></label>
-                <textarea id="experience_feedback" name="experience_feedback" rows="4" required class="w-full mt-2 p-3 border-b-2 border-gray-300 focus:border-violet-700 outline-none transition" placeholder="La tua risposta"></textarea>
-            </div>
-
-            <!-- Cosa potremmo migliorare? -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <label for="improvement_feedback" class="block text-lg font-semibold text-gray-900 mb-2">Cosa potremmo migliorare? / What could we improve? <span class="text-red-600">*</span></label>
-                <textarea id="improvement_feedback" name="improvement_feedback" rows="4" required class="w-full mt-2 p-3 border-b-2 border-gray-300 focus:border-violet-700 outline-none transition" placeholder="La tua risposta"></textarea>
-            </div>
-
-            <!-- Pulsante di Invio -->
-            <div class="flex justify-start pt-4">
-                <button type="submit" class="bg-violet-700 text-white font-bold py-3 px-8 rounded-lg hover:bg-violet-800 focus:outline-none focus:ring-4 focus:ring-violet-300 transition-all duration-300 transform hover:scale-105">
-                    Invia
-                </button>
-            </div>
-        </form>
-        <!-- Fine del Form -->
-
-    </div>
-
-    <!-- Modale di Conferma -->
-    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg shadow-xl p-8 max-w-sm mx-auto text-center">
-            <h3 class="text-2xl font-bold text-violet-700 mb-4">Grazie!</h3>
-            <p class="text-gray-700 mb-6">Il tuo feedback è stato inviato con successo.</p>
-            <button id="closeModal" class="bg-violet-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-violet-800 transition-colors">
-                Chiudi
-            </button>
         </div>
     </div>
-
 
     <script>
-        // Gestione dell'invio del modulo
-        const form = document.getElementById('satisfactionForm');
-        const modal = document.getElementById('confirmationModal');
-        const closeModalButton = document.getElementById('closeModal');
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DIZIONARIO TRADUZIONI ---
+            const translations = {
+                it: {
+                    lang_en: "English",
+                    main_title: "Il tuo parere è importante",
+                    main_subtitle: "Dedica un minuto a condividere la tua esperienza.",
+                    step1_title: "Iniziamo...",
+                    company_name_label: "Nome Azienda Cliente",
+                    company_name_placeholder: "Es. Rossi S.p.A.",
+                    exhibition_name_label: "Fiera di riferimento",
+                    exhibition_name_placeholder: "Es. Fiera del Mobile 2025",
+                    step2_title: "Com'è andata l'esperienza generale?",
+                    overall_satisfaction_label: "Soddisfazione Generale del Servizio",
+                    very_satisfied: "Molto Soddisfatto",
+                    satisfied: "Soddisfatto",
+                    fairly_satisfied: "Abbastanza",
+                    not_satisfied: "Per nulla",
+                    designer_experience_label: "Esperienza con il nostro Designer",
+                    excellent: "Eccellente",
+                    good: "Buona",
+                    fair: "Sufficiente",
+                    poor: "Scarsa",
+                    step3_title: "Valuta alcuni aspetti specifici...",
+                    design_quality_label: "Qualità Progettazione",
+                    meeting_needs_label: "Rispondenza Esigenze",
+                    deadlines_label: "Rispetto Tempistiche",
+                    recommend_label: "Probabilità di Raccomandarci",
+                    not_likely: "Per nulla probabile",
+                    extremely_likely: "Estremamente probabile",
+                    step4_title: "Ultime domande...",
+                    experience_feedback_label: "Cosa ti è piaciuto di più della nostra collaborazione?",
+                    improvement_feedback_label: "C'è qualcosa che potremmo migliorare?",
+                    your_answer_placeholder: "La tua risposta...",
+                    suggestion_placeholder: "Ogni suggerimento è prezioso...",
+                    prev_btn: "Indietro",
+                    next_btn: "Avanti",
+                    submit_btn: "Invia",
+                    thanks_title: "Grazie!",
+                    thanks_subtitle: "Il tuo feedback è stato inviato. Ci aiuterà a migliorare ancora.",
+                    reset_btn: "Invia un altro feedback",
+                },
+                en: {
+                    lang_it: "Italiano",
+                    main_title: "Your opinion is important",
+                    main_subtitle: "Take a minute to share your experience.",
+                    step1_title: "Let's start...",
+                    company_name_label: "Company Name",
+                    company_name_placeholder: "E.g. Smith Inc.",
+                    exhibition_name_label: "Exhibition Name",
+                    exhibition_name_placeholder: "E.g. Design Fair 2025",
+                    step2_title: "How was the overall experience?",
+                    overall_satisfaction_label: "Overall Service Satisfaction",
+                    very_satisfied: "Very Satisfied",
+                    satisfied: "Satisfied",
+                    fairly_satisfied: "Fairly",
+                    not_satisfied: "Not at all",
+                    designer_experience_label: "Experience with our Designer",
+                    excellent: "Excellent",
+                    good: "Good",
+                    fair: "Fair",
+                    poor: "Poor",
+                    step3_title: "Please rate some specific aspects...",
+                    design_quality_label: "Design Quality",
+                    meeting_needs_label: "Meeting of Needs",
+                    deadlines_label: "Meeting of Deadlines",
+                    recommend_label: "Likelihood to Recommend",
+                    not_likely: "Not at all likely",
+                    extremely_likely: "Extremely likely",
+                    step4_title: "Last questions...",
+                    experience_feedback_label: "What did you like most about our collaboration?",
+                    improvement_feedback_label: "Is there anything we could improve?",
+                    your_answer_placeholder: "Your answer...",
+                    suggestion_placeholder: "Every suggestion is valuable...",
+                    prev_btn: "Back",
+                    next_btn: "Next",
+                    submit_btn: "Submit",
+                    thanks_title: "Thank you!",
+                    thanks_subtitle: "Your feedback has been submitted. It will help us improve.",
+                    reset_btn: "Submit another feedback",
+                }
+            };
+            
+            let currentLang = 'it';
 
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Previene l'invio reale del modulo
+            const langSwitchBtn = document.getElementById('lang-switch');
 
-            // Validazione manuale per assicurarsi che tutti i campi required siano compilati
-            if (form.checkValidity()) {
-                // Raccoglie i dati del modulo
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData.entries());
+            function setLanguage(lang) {
+                currentLang = lang;
+                document.documentElement.lang = lang;
                 
-                // Stampa i dati nella console (in un'applicazione reale, li invieresti a un server)
-                console.log('Dati del modulo inviati:', data);
-
-                // Mostra il modale di conferma
-                modal.classList.remove('hidden');
+                // Aggiorna il testo del pulsante di cambio lingua
+                langSwitchBtn.innerHTML = `<span data-lang-key="${lang === 'it' ? 'lang_en' : 'lang_it'}">${lang === 'it' ? 'English' : 'Italiano'}</span>`;
                 
-                // Resetta il modulo
+                // Aggiorna tutti gli elementi con data-lang-key
+                document.querySelectorAll('[data-lang-key]').forEach(el => {
+                    const key = el.dataset.langKey;
+                    if (translations[lang][key]) {
+                        el.textContent = translations[lang][key];
+                    }
+                });
+
+                // Aggiorna i placeholder
+                document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
+                    const key = el.dataset.langPlaceholder;
+                    if (translations[lang][key]) {
+                        el.placeholder = translations[lang][key];
+                    }
+                });
+
+                // Aggiorna il testo del pulsante Avanti/Invia
+                updateButtons();
+            }
+
+            langSwitchBtn.addEventListener('click', () => {
+                const newLang = currentLang === 'it' ? 'en' : 'it';
+                setLanguage(newLang);
+            });
+
+            // --- LOGICA DEL WIZARD ---
+            const steps = document.querySelectorAll('.form-step');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const progressBar = document.getElementById('progress-bar');
+            const form = document.getElementById('wizardForm');
+            const surveyContainer = document.getElementById('survey-container');
+            const thankYouScreen = document.getElementById('thank-you-screen');
+            const resetBtn = document.getElementById('resetBtn');
+
+            let currentStep = 0;
+            const totalSteps = steps.length;
+
+            function updateButtons() {
+                prevBtn.style.visibility = (currentStep === 0) ? 'hidden' : 'visible';
+                
+                if (currentStep === totalSteps - 1) {
+                    nextBtn.textContent = translations[currentLang].submit_btn;
+                } else {
+                    nextBtn.textContent = translations[currentLang].next_btn;
+                }
+            }
+            
+            function updateProgressBar() {
+                progressBar.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
+            }
+
+            function showStep(stepIndex) {
+                steps.forEach((step, index) => step.classList.toggle('active', index === stepIndex));
+                currentStep = stepIndex;
+                updateButtons();
+                updateProgressBar();
+            }
+
+            function validateStep(stepIndex) {
+                const currentStepElement = steps[stepIndex];
+                const inputs = currentStepElement.querySelectorAll('input[required], textarea[required]');
+                let isValid = true;
+                
+                inputs.forEach(input => {
+                    if ((input.type === 'text' || input.tagName.toLowerCase() === 'textarea') && !input.value.trim()) {
+                        isValid = false;
+                        input.classList.add('border-red-500', 'focus:ring-red-500');
+                    } else {
+                        input.classList.remove('border-red-500', 'focus:ring-red-500');
+                    }
+                });
+
+                const fieldsets = currentStepElement.querySelectorAll('fieldset');
+                fieldsets.forEach(fieldset => {
+                    const radio = fieldset.querySelector('input[type="radio"][required]');
+                    if (radio && !form.querySelector(`input[name="${radio.name}"]:checked`)) {
+                        isValid = false;
+                        fieldset.classList.add('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
+                    } else if (radio) {
+                        fieldset.classList.remove('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
+                    }
+                });
+                return isValid;
+            }
+
+            nextBtn.addEventListener('click', () => {
+                if (!validateStep(currentStep)) return;
+                if (currentStep < totalSteps - 1) {
+                    showStep(currentStep + 1);
+                } else {
+                    const formData = new FormData(form);
+                    const data = Object.fromEntries(formData.entries());
+                    console.log('Dati del modulo inviati:', data);
+                    surveyContainer.style.display = 'none';
+                    thankYouScreen.style.display = 'block';
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 0) showStep(currentStep - 1);
+            });
+            
+            resetBtn.addEventListener('click', () => {
                 form.reset();
-            } else {
-                // Se il browser non mostra un avviso di validazione, puoi aggiungerne uno custom qui
-                // Per la maggior parte dei browser moderni, l'avviso nativo è sufficiente
-                form.reportValidity();
-            }
-        });
+                showStep(0);
+                thankYouScreen.style.display = 'none';
+                surveyContainer.style.display = 'block';
+            });
 
-        // Chiude il modale
-        closeModalButton.addEventListener('click', () => {
-            modal.classList.add('hidden');
-        });
-
-        // Chiude il modale cliccando fuori
-        modal.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.classList.add('hidden');
-            }
+            // Inizializzazione
+            setLanguage('it'); // Imposta la lingua iniziale
         });
     </script>
-
 </body>
 </html>
