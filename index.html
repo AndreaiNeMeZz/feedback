@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sondaggio di Soddisfazione Cliente</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Stile di base per il font */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3e8ff; /* Sfondo viola chiaro per abbinare il tema */
+        }
+        /* Stile per nascondere i radio button nativi e usare cerchi personalizzati */
+        .custom-radio {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            outline: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .custom-radio:checked {
+            border-color: #6d28d9; /* Viola scuro */
+            background-color: #6d28d9;
+            box-shadow: 0 0 0 3px white, 0 0 0 5px #6d28d9;
+        }
+        /* Stile per la tabella delle valutazioni specifiche su schermi piccoli */
+        @media (max-width: 640px) {
+            .table-responsive {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .table-responsive th,
+            .table-responsive td {
+                white-space: nowrap;
+            }
+            .table-responsive th:first-child,
+            .table-responsive td:first-child {
+                position: sticky;
+                left: 0;
+                background-color: white;
+                z-index: 1;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <div class="container mx-auto px-4 py-8 md:py-12 max-w-3xl">
+
+        <!-- Card Intestazione -->
+        <div class="bg-white border-t-8 border-violet-700 rounded-lg shadow-lg p-8 mb-6">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">Sondaggio di Soddisfazione Cliente</h1>
+            <div class="text-gray-700 space-y-4">
+                <p>
+                    Gentile Cliente,<br>
+                    Grazie per aver scelto Emotiva Design per la progettazione e realizzazione del Suo stand fieristico. Le chiediamo gentilmente di dedicare alcuni minuti per compilare questo breve modulo. Il Suo parere è per noi prezioso e ci aiuterà a migliorare costantemente i nostri servizi per tutti gli eventi a cui partecipiamo.
+                </p>
+                <p>
+                    Cordiali saluti,<br>
+                    Il Team di Emotiva Design
+                </p>
+                <hr class="my-4">
+                <p class="text-sm text-gray-600">
+                    Dear Client,<br>
+                    Thank you for choosing Emotiva Design for the design and construction of your exhibition stand. We kindly ask you to dedicate a few minutes to complete this short form. Your feedback is precious to us and will help us to continually improve our services for all the events we participate in.
+                </p>
+                 <p class="text-sm text-gray-600">
+                    King regards,<br>
+                    The Emotiva Design Team
+                </p>
+            </div>
+            <p class="text-red-600 text-sm mt-6">* Indica una domanda obbligatoria</p>
+        </div>
+
+        <!-- Inizio del Form -->
+        <form id="satisfactionForm" class="space-y-6">
+
+            <!-- Nome Azienda -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <label for="company_name" class="block text-lg font-semibold text-gray-900 mb-2">Nome Azienda Cliente / Company Name <span class="text-red-600">*</span></label>
+                <input type="text" id="company_name" name="company_name" required class="w-full mt-2 p-3 border-b-2 border-gray-300 focus:border-violet-700 outline-none transition" placeholder="La tua risposta">
+            </div>
+
+            <!-- Fiera di riferimento -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <label for="exhibition_name" class="block text-lg font-semibold text-gray-900 mb-2">Fiera di riferimento / Exhibition Name <span class="text-red-600">*</span></label>
+                <input type="text" id="exhibition_name" name="exhibition_name" required class="w-full mt-2 p-3 border-b-2 border-gray-300 focus:border-violet-700 outline-none transition" placeholder="La tua risposta">
+            </div>
+
+            <!-- Soddisfazione Generale -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <fieldset>
+                    <legend class="text-lg font-semibold text-gray-900 mb-4">Soddisfazione Generale del Servizio / Overall Service Satisfaction <span class="text-red-600">*</span></legend>
+                    <div class="space-y-4">
+                        <div class="flex items-center"><input type="radio" id="overall_very_satisfied" name="overall_satisfaction" value="Molto Soddisfatto" required class="custom-radio mr-3"><label for="overall_very_satisfied">Molto Soddisfatto/Very Satisfied</label></div>
+                        <div class="flex items-center"><input type="radio" id="overall_satisfied" name="overall_satisfaction" value="Soddisfatto" class="custom-radio mr-3"><label for="overall_satisfied">Soddisfatto/Satisfied</label></div>
+                        <div class="flex items-center"><input type="radio" id="overall_fairly_satisfied" name="overall_satisfaction" value="Abbastanza Soddisfatto" class="custom-radio mr-3"><label for="overall_fairly_satisfied">Abbastanza Soddisfatto/Fairly Satisfied</label></div>
+                        <div class="flex items-center"><input type="radio" id="overall_not_satisfied" name="overall_satisfaction" value="Non Soddisfatto" class="custom-radio mr-3"><label for="overall_not_satisfied">Non Soddisfatto/Not Satisfied</label></div>
+                    </div>
+                </fieldset>
+            </div>
+            
+            <!-- Esperienza con il Designer -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <fieldset>
+                    <legend class="text-lg font-semibold text-gray-900 mb-4">Qual è stata la tua esperienza con il nostro Designer per questo progetto? / What was your experience like with our Designer on this project? <span class="text-red-600">*</span></legend>
+                    <div class="space-y-4">
+                        <div class="flex items-center"><input type="radio" id="designer_very_satisfied" name="designer_experience" value="Molto Soddisfatto" required class="custom-radio mr-3"><label for="designer_very_satisfied">Molto Soddisfatto/Very Satisfied</label></div>
+                        <div class="flex items-center"><input type="radio" id="designer_satisfied" name="designer_experience" value="Soddisfatto" class="custom-radio mr-3"><label for="designer_satisfied">Soddisfatto/Satisfied</label></div>
+                        <div class="flex items-center"><input type="radio" id="designer_fairly_satisfied" name="designer_experience" value="Abbastanza Soddisfatto" class="custom-radio mr-3"><label for="designer_fairly_satisfied">Abbastanza Soddisfatto/Fairly Satisfied</label></div>
+                        <div class="flex items-center"><input type="radio" id="designer_not_satisfied" name="designer_experience" value="Non Soddisfatto" class="custom-radio mr-3"><label for="designer_not_satisfied">Non Soddisfatto/Not Satisfied</label></div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Probabilità di Raccomandarci -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <fieldset>
+                    <legend class="text-lg font-semibold text-gray-900 mb-4">Probabilità di Raccomandarci / Likelihood to Recommend</legend>
+                    <div class="flex flex-col sm:flex-row justify-between items-center mt-4">
+                        <span class="text-gray-600 mb-2 sm:mb-0 text-center">Per nulla probabile/Not at all likely</span>
+                        <div class="flex items-center space-x-4 md:space-x-6">
+                            <div class="text-center"><label for="recommend_1">1</label><input type="radio" id="recommend_1" name="recommend_likelihood" value="1" class="custom-radio block mx-auto mt-1"></div>
+                            <div class="text-center"><label for="recommend_2">2</label><input type="radio" id="recommend_2" name="recommend_likelihood" value="2" class="custom-radio block mx-auto mt-1"></div>
+                            <div class="text-center"><label for="recommend_3">3</label><input type="radio" id="recommend_3" name="recommend_likelihood" value="3" class="custom-radio block mx-auto mt-1"></div>
+                            <div class="text-center"><label for="recommend_4">4</label><input type="radio" id="recommend_4" name="recommend_likelihood" value="4" class="custom-radio block mx-auto mt-1"></div>
+                            <div class="text-center"><label for="recommend_5">5</label><input type="radio" id="recommend_5" name="recommend_likelihood" value="5" class="custom-radio block mx-auto mt-1"></div>
+                        </div>
+                        <span class="text-gray-600 mt-2 sm:mt-0 text-center">Estremamente probabile/Extremely likely</span>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Valutazioni Specifiche -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <fieldset>
+                    <legend class="text-lg font-semibold text-gray-900 mb-4">Valutazioni specifiche / Specific Ratings <span class="text-red-600">*</span></legend>
+                    <div class="table-responsive">
+                        <table class="w-full text-center mt-4">
+                            <thead>
+                                <tr>
+                                    <th class="text-left font-medium text-gray-600 pb-4"></th>
+                                    <th class="font-medium text-gray-600 pb-4 px-2">Molto Soddisfatto/Very Satisfied</th>
+                                    <th class="font-medium text-gray-600 pb-4 px-2">Soddisfatto/Satisfied</th>
+                                    <th class="font-medium text-gray-600 pb-4 px-2">Abbastanza Soddisfatto/Fairly Satisfied</th>
+                                    <th class="font-medium text-gray-600 pb-4 px-2">Non Soddisfatto/Not Satisfied</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-t">
+                                    <td class="text-left py-4 pr-4 font-medium">Qualità Progettazione/Design Quality</td>
+                                    <td class="py-4"><input type="radio" name="design_quality" value="Molto Soddisfatto" required class="custom-radio mx-auto"></td>
+                                    <td class="py-4"><input type="radio" name="design_quality" value="Soddisfatto" class="custom-radio mx-auto"></td>
+                                    <td class="py-4"><input type="radio" name="design_quality" value="Abbastanza Soddisfatto" class="custom-radio mx-auto"></td>
+                                    <td class="py-4"><input type="radio" name="design_quality" value="Non Soddisfatto" class="custom-radio mx-auto"></td>
+                                </tr>
+                                <tr class="border-t">
+                                    <td class="text-left py-4 pr-4 font-medium">Rispondenza Esigenze/Meeting of Needs</td>
+                                    <td class="py-4"><input type="radio" name="meeting_needs" value="Molto Soddisfatto" required class="custom-radio mx-auto"></td>
+                                    <td class="py-4"><input type="radio" name="meeting_needs" value="Soddisfatto" class="custom-radio mx-auto"></td>
+                                    <td class="py-4"><input type="radio" name="meeting_needs" value="Abbastanza Soddisfatto" class="custom-radio mx-auto"></td>
+                                    <td class="py-4"><input type="radio" name="meeting_needs" value="Non Soddisfatto" class="custom-radio mx-auto"></td>
+                                </tr>
+                                <tr class="border-t">
+                                    <td class="text-left py-4 pr-4 font-medium">Rispetto delle Tempistiche/Meeting of Deadlines</td>
+                                    <td class="py-4"><input type="radio" name="meeting_deadlines" value="Molto Soddisfatto" required class="custom-radio mx-auto"></td>
+                                    <td class="py-4"><input type="radio" name="meeting_deadlines" value="Soddisfatto" class="custom-radio mx-auto"></td>
+                                    <td class="py-4"><input type="radio" name="meeting_deadlines" value="Abbastanza Soddisfatto" class="custom-radio mx-auto"></td>
+                                    <td class="py-4"><input type="radio" name="meeting_deadlines" value="Non Soddisfatto" class="custom-radio mx-auto"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Come vi siete trovati? -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <label for="experience_feedback" class="block text-lg font-semibold text-gray-900 mb-2">Come vi siete trovati? / How was your experience? <span class="text-red-600">*</span></label>
+                <textarea id="experience_feedback" name="experience_feedback" rows="4" required class="w-full mt-2 p-3 border-b-2 border-gray-300 focus:border-violet-700 outline-none transition" placeholder="La tua risposta"></textarea>
+            </div>
+
+            <!-- Cosa potremmo migliorare? -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <label for="improvement_feedback" class="block text-lg font-semibold text-gray-900 mb-2">Cosa potremmo migliorare? / What could we improve? <span class="text-red-600">*</span></label>
+                <textarea id="improvement_feedback" name="improvement_feedback" rows="4" required class="w-full mt-2 p-3 border-b-2 border-gray-300 focus:border-violet-700 outline-none transition" placeholder="La tua risposta"></textarea>
+            </div>
+
+            <!-- Pulsante di Invio -->
+            <div class="flex justify-start pt-4">
+                <button type="submit" class="bg-violet-700 text-white font-bold py-3 px-8 rounded-lg hover:bg-violet-800 focus:outline-none focus:ring-4 focus:ring-violet-300 transition-all duration-300 transform hover:scale-105">
+                    Invia
+                </button>
+            </div>
+        </form>
+        <!-- Fine del Form -->
+
+    </div>
+
+    <!-- Modale di Conferma -->
+    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-xl p-8 max-w-sm mx-auto text-center">
+            <h3 class="text-2xl font-bold text-violet-700 mb-4">Grazie!</h3>
+            <p class="text-gray-700 mb-6">Il tuo feedback è stato inviato con successo.</p>
+            <button id="closeModal" class="bg-violet-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-violet-800 transition-colors">
+                Chiudi
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        // Gestione dell'invio del modulo
+        const form = document.getElementById('satisfactionForm');
+        const modal = document.getElementById('confirmationModal');
+        const closeModalButton = document.getElementById('closeModal');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Previene l'invio reale del modulo
+
+            // Validazione manuale per assicurarsi che tutti i campi required siano compilati
+            if (form.checkValidity()) {
+                // Raccoglie i dati del modulo
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                
+                // Stampa i dati nella console (in un'applicazione reale, li invieresti a un server)
+                console.log('Dati del modulo inviati:', data);
+
+                // Mostra il modale di conferma
+                modal.classList.remove('hidden');
+                
+                // Resetta il modulo
+                form.reset();
+            } else {
+                // Se il browser non mostra un avviso di validazione, puoi aggiungerne uno custom qui
+                // Per la maggior parte dei browser moderni, l'avviso nativo è sufficiente
+                form.reportValidity();
+            }
+        });
+
+        // Chiude il modale
+        closeModalButton.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        // Chiude il modale cliccando fuori
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>
