@@ -225,16 +225,14 @@
         // --- CONFIGURAZIONE FIREBASE ---
         // Queste sono le credenziali del TUO progetto Firebase.
         const firebaseConfig = {
-            apiKey: "AIzaSyDCOO9utxlPoDM0BOh7NlcV4I6tc_aZnFw",
-            authDomain: "sondaggio-clienti.firebaseapp.com",
-            projectId: "sondaggio-clienti",
-            storageBucket: "sondaggio-clienti.appspot.com", // Corretto .appspot.com
-            messagingSenderId: "924437595625",
-            appId: "1:924437595625:web:736fc89a06288da063b778"
+            apiKey: "AIzaSyCt65TAEc-0xogYH7A51Grb_gk1GMzXxM0",
+            authDomain: "sondaggio-feedback.firebaseapp.com",
+            projectId: "sondaggio-feedback",
+            storageBucket: "sondaggio-feedback.appspot.com",
+            messagingSenderId: "874886103584",
+            appId: "1:874886103584:web:7d163ef25680767575f245"
         };
         
-        const appId = firebaseConfig.projectId; // Usiamo il projectId per la coerenza del percorso dati
-
         let db, auth, userId;
 
         try {
@@ -250,11 +248,9 @@
         // Gestisce l'autenticazione dell'utente
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                // Utente già autenticato
                 userId = user.uid;
                 console.log("Utente autenticato:", userId);
             } else {
-                // Autenticazione anonima se non c'è un utente
                 try {
                     const userCredential = await signInAnonymously(auth);
                     userId = userCredential.user.uid;
@@ -331,7 +327,6 @@
         const surveyContainer = document.getElementById('survey-container');
         const responseScreen = document.getElementById('response-screen');
         const resetBtn = document.getElementById('resetBtn');
-        const navigation = document.getElementById('navigation');
 
         let currentStep = 0;
         const totalSteps = steps.length;
@@ -423,8 +418,8 @@
             data.language = currentLang;
 
             try {
-                // Il percorso ora è più semplice, ma funziona con la Cloud Function
-                // perché la funzione non dipende più da un "appId" hardcodato.
+                // Il percorso di salvataggio è stato semplificato per corrispondere
+                // alla configurazione della Cloud Function nella guida più recente.
                 const docRef = await addDoc(collection(db, "survey_responses"), data);
                 console.log("Documento scritto con ID: ", docRef.id);
                 showResponseScreen('success');
