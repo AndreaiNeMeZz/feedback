@@ -454,5 +454,17 @@
             setLanguage('it');
         });
     </script>
+    
+    <!-- Script per l'altezza dinamica dell'iframe -->
+    <script>
+      // Invia l'altezza del contenuto alla pagina genitore ogni volta che cambia
+      const observer = new ResizeObserver(entries => {
+        const height = entries[0].target.scrollHeight;
+        window.parent.postMessage({
+          frameHeight: height
+        }, '*'); 
+      });
+      observer.observe(document.body);
+    </script>
 </body>
 </html>
