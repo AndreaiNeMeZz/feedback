@@ -112,45 +112,30 @@
                             <h3 class="font-semibold text-xl text-gray-800 mb-6" data-lang-key="step3_title">Valuta alcuni aspetti specifici...</h3>
                             <div class="space-y-8">
                                 <fieldset>
-                                    <legend class="block text-sm font-medium text-gray-600 mb-3"><span data-lang-key="design_quality_label">Qualità Progettazione</span> <span class="text-red-500">*</span></legend>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="poor">Scarsa</span>
-                                        <div class="flex justify-center items-center w-3/5 space-x-2">
-                                            <div><input type="radio" name="design_quality" id="dq_1" value="1" required class="sr-only nps-radio"><label for="dq_1" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">1</label></div>
-                                            <div><input type="radio" name="design_quality" id="dq_2" value="2" class="sr-only nps-radio"><label for="dq_2" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">2</label></div>
-                                            <div><input type="radio" name="design_quality" id="dq_3" value="3" class="sr-only nps-radio"><label for="dq_3" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">3</label></div>
-                                            <div><input type="radio" name="design_quality" id="dq_4" value="4" class="sr-only nps-radio"><label for="dq_4" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">4</label></div>
-                                            <div><input type="radio" name="design_quality" id="dq_5" value="5" class="sr-only nps-radio"><label for="dq_5" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">5</label></div>
-                                        </div>
-                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="excellent">Eccellente</span>
+                                    <legend class="block text-sm font-medium text-gray-600 mb-2"><span data-lang-key="design_quality_label">Qualità Progettazione</span> <span class="text-red-500">*</span></legend>
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                        <div><input type="radio" name="design_quality" id="dq_1" value="Molto Soddisfatto" required class="sr-only rating-radio"><label for="dq_1" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="very_satisfied">Molto Soddisfatto</label></div>
+                                        <div><input type="radio" name="design_quality" id="dq_2" value="Soddisfatto" class="sr-only rating-radio"><label for="dq_2" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="satisfied">Soddisfatto</label></div>
+                                        <div><input type="radio" name="design_quality" id="dq_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="dq_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
+                                        <div><input type="radio" name="design_quality" id="dq_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="dq_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
                                     </div>
                                 </fieldset>
                                 <fieldset>
-                                    <legend class="block text-sm font-medium text-gray-600 mb-3"><span data-lang-key="meeting_needs_label">Rispondenza Esigenze</span> <span class="text-red-500">*</span></legend>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="poor">Scarsa</span>
-                                        <div class="flex justify-center items-center w-3/5 space-x-2">
-                                            <div><input type="radio" name="meeting_needs" id="mn_1" value="1" required class="sr-only nps-radio"><label for="mn_1" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">1</label></div>
-                                            <div><input type="radio" name="meeting_needs" id="mn_2" value="2" class="sr-only nps-radio"><label for="mn_2" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">2</label></div>
-                                            <div><input type="radio" name="meeting_needs" id="mn_3" value="3" class="sr-only nps-radio"><label for="mn_3" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">3</label></div>
-                                            <div><input type="radio" name="meeting_needs" id="mn_4" value="4" class="sr-only nps-radio"><label for="mn_4" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">4</label></div>
-                                            <div><input type="radio" name="meeting_needs" id="mn_5" value="5" class="sr-only nps-radio"><label for="mn_5" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">5</label></div>
-                                        </div>
-                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="excellent">Eccellente</span>
+                                    <legend class="block text-sm font-medium text-gray-600 mb-2"><span data-lang-key="meeting_needs_label">Rispondenza Esigenze</span> <span class="text-red-500">*</span></legend>
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                        <div><input type="radio" name="meeting_needs" id="mn_1" value="Molto Soddisfatto" required class="sr-only rating-radio"><label for="mn_1" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="very_satisfied">Molto Soddisfatto</label></div>
+                                        <div><input type="radio" name="meeting_needs" id="mn_2" value="Soddisfatto" class="sr-only rating-radio"><label for="mn_2" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="satisfied">Soddisfatto</label></div>
+                                        <div><input type="radio" name="meeting_needs" id="mn_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="mn_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
+                                        <div><input type="radio" name="meeting_needs" id="mn_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="mn_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
                                     </div>
                                 </fieldset>
                                 <fieldset>
-                                    <legend class="block text-sm font-medium text-gray-600 mb-3"><span data-lang-key="deadlines_label">Rispetto Tempistiche</span> <span class="text-red-500">*</span></legend>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="poor">Scarso</span>
-                                        <div class="flex justify-center items-center w-3/5 space-x-2">
-                                            <div><input type="radio" name="meeting_deadlines" id="md_1" value="1" required class="sr-only nps-radio"><label for="md_1" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">1</label></div>
-                                            <div><input type="radio" name="meeting_deadlines" id="md_2" value="2" class="sr-only nps-radio"><label for="md_2" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">2</label></div>
-                                            <div><input type="radio" name="meeting_deadlines" id="md_3" value="3" class="sr-only nps-radio"><label for="md_3" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">3</label></div>
-                                            <div><input type="radio" name="meeting_deadlines" id="md_4" value="4" class="sr-only nps-radio"><label for="md_4" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">4</label></div>
-                                            <div><input type="radio" name="meeting_deadlines" id="md_5" value="5" class="sr-only nps-radio"><label for="md_5" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">5</label></div>
-                                        </div>
-                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="excellent">Eccellente</span>
+                                    <legend class="block text-sm font-medium text-gray-600 mb-2"><span data-lang-key="deadlines_label">Rispetto Tempistiche</span> <span class="text-red-500">*</span></legend>
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                        <div><input type="radio" name="meeting_deadlines" id="md_1" value="Molto Soddisfatto" required class="sr-only rating-radio"><label for="md_1" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="very_satisfied">Molto Soddisfatto</label></div>
+                                        <div><input type="radio" name="meeting_deadlines" id="md_2" value="Soddisfatto" class="sr-only rating-radio"><label for="md_2" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="satisfied">Soddisfatto</label></div>
+                                        <div><input type="radio" name="meeting_deadlines" id="md_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="md_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
+                                        <div><input type="radio" name="meeting_deadlines" id="md_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="md_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
                                     </div>
                                 </fieldset>
                                 <fieldset>
@@ -215,242 +200,211 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        // Importa le funzioni necessarie dai moduli Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DIZIONARIO TRADUZIONI ---
+            const translations = {
+                it: {
+                    lang_en: "English", main_title: "Il tuo parere è importante", main_subtitle: "Dedica un minuto a condividere la tua esperienza.",
+                    step1_title: "Iniziamo...", company_name_label: "Nome Azienda Cliente", company_name_placeholder: "Es. Rossi S.p.A.",
+                    exhibition_name_label: "Fiera di riferimento", exhibition_name_placeholder: "Es. Fiera del Mobile 2025",
+                    step2_title: "Com'è andata l'esperienza generale?", overall_satisfaction_label: "Soddisfazione Generale del Servizio",
+                    very_satisfied: "Molto Soddisfatto", satisfied: "Soddisfatto", fairly_satisfied: "Abbastanza", not_satisfied: "Per nulla",
+                    designer_experience_label: "Esperienza con il nostro Designer", excellent: "Eccellente", good: "Buona", fair: "Sufficiente", poor: "Scarsa",
+                    step3_title: "Valuta alcuni aspetti specifici...", design_quality_label: "Qualità Progettazione", meeting_needs_label: "Rispondenza Esigenze",
+                    deadlines_label: "Rispetto Tempistiche", recommend_label: "Probabilità di Raccomandarci", not_likely: "Per nulla probabile", extremely_likely: "Estremamente probabile",
+                    step4_title: "Ultime domande...", experience_feedback_label: "Cosa ti è piaciuto di più della nostra collaborazione?",
+                    improvement_feedback_label: "C'è qualcosa che potremmo migliorare?", your_answer_placeholder: "La tua risposta...",
+                    suggestion_placeholder: "Ogni suggerimento è prezioso...", prev_btn: "Indietro", next_btn: "Avanti", submit_btn: "Invia",
+                    thanks_title: "Grazie!", thanks_subtitle: "Il tuo feedback è stato inviato. Ci aiuterà a migliorare ancora.",
+                    reset_btn: "Invia un altro feedback", submission_loading: "Invio in corso...",
+                    error_title: "Errore", error_subtitle: "Non è stato possibile inviare il tuo feedback. Riprova più tardi."
+                },
+                en: {
+                    lang_it: "Italiano", main_title: "Your opinion is important", main_subtitle: "Take a minute to share your experience.",
+                    step1_title: "Let's start...", company_name_label: "Company Name", company_name_placeholder: "E.g. Smith Inc.",
+                    exhibition_name_label: "Exhibition Name", exhibition_name_placeholder: "E.g. Design Fair 2025",
+                    step2_title: "How was the overall experience?", overall_satisfaction_label: "Overall Service Satisfaction",
+                    very_satisfied: "Very Satisfied", satisfied: "Satisfied", fairly_satisfied: "Fairly", not_satisfied: "Not at all",
+                    designer_experience_label: "Experience with our Designer", excellent: "Excellent", good: "Good", fair: "Fair", poor: "Poor",
+                    step3_title: "Please rate some specific aspects...", design_quality_label: "Design Quality", meeting_needs_label: "Meeting of Needs",
+                    deadlines_label: "Meeting of Deadlines", recommend_label: "Likelihood to Recommend", not_likely: "Not at all likely", extremely_likely: "Extremely likely",
+                    step4_title: "Last questions...", experience_feedback_label: "What did you like most about our collaboration?",
+                    improvement_feedback_label: "Is there anything we could improve?", your_answer_placeholder: "Your answer...",
+                    suggestion_placeholder: "Every suggestion is valuable...", prev_btn: "Back", next_btn: "Next", submit_btn: "Submit",
+                    thanks_title: "Thank you!", thanks_subtitle: "Your feedback has been submitted. It will help us improve.",
+                    reset_btn: "Submit another feedback", submission_loading: "Submitting...",
+                    error_title: "Error", error_subtitle: "Could not submit your feedback. Please try again later."
+                }
+            };
+            
+            let currentLang = 'it';
+            const langSwitchBtn = document.getElementById('lang-switch');
 
-        // --- CONFIGURAZIONE FIREBASE ---
-        // Queste sono le credenziali del TUO progetto Firebase.
-        const firebaseConfig = {
-            apiKey: "AIzaSyCt65TAEc-0xogYH7A51Grb_gk1GMzXxM0",
-            authDomain: "sondaggio-feedback.firebaseapp.com",
-            projectId: "sondaggio-feedback",
-            storageBucket: "sondaggio-feedback.appspot.com",
-            messagingSenderId: "874886103584",
-            appId: "1:874886103584:web:7d163ef25680767575f245"
-        };
-        
-        let db, auth, userId;
+            function setLanguage(lang) {
+                currentLang = lang;
+                document.documentElement.lang = lang;
+                langSwitchBtn.innerHTML = `<span data-lang-key="${lang === 'it' ? 'lang_en' : 'lang_it'}">${translations[lang][lang === 'it' ? 'lang_en' : 'lang_it']}</span>`;
+                document.querySelectorAll('[data-lang-key]').forEach(el => {
+                    const key = el.dataset.langKey;
+                    if (translations[lang][key]) el.textContent = translations[lang][key];
+                });
+                document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
+                    const key = el.dataset.langPlaceholder;
+                    if (translations[lang][key]) el.placeholder = translations[lang][key];
+                });
+                updateButtons();
+            }
 
-        try {
-            // Inizializza l'app Firebase
-            const app = initializeApp(firebaseConfig);
-            // Ottieni le istanze di Firestore e Auth
-            db = getFirestore(app);
-            auth = getAuth(app);
-        } catch (e) {
-            console.error("Errore nell'inizializzazione di Firebase:", e);
-        }
+            langSwitchBtn.addEventListener('click', () => setLanguage(currentLang === 'it' ? 'en' : 'it'));
 
-        // Gestisce l'autenticazione dell'utente
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                userId = user.uid;
-                console.log("Utente autenticato:", userId);
-            } else {
+            // --- LOGICA DEL WIZARD ---
+            const steps = document.querySelectorAll('.form-step');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const progressBar = document.getElementById('progress-bar');
+            const form = document.getElementById('wizardForm');
+            const surveyContainer = document.getElementById('survey-container');
+            const responseScreen = document.getElementById('response-screen');
+            const resetBtn = document.getElementById('resetBtn');
+
+            let currentStep = 0;
+            const totalSteps = steps.length;
+
+            function updateButtons() {
+                prevBtn.style.visibility = (currentStep === 0) ? 'hidden' : 'visible';
+                nextBtn.textContent = (currentStep === totalSteps - 1) ? translations[currentLang].submit_btn : translations[currentLang].next_btn;
+            }
+            
+            function updateProgressBar() {
+                progressBar.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
+            }
+
+            function showStep(stepIndex) {
+                steps.forEach((step, index) => step.classList.toggle('active', index === stepIndex));
+                currentStep = stepIndex;
+                updateButtons();
+                updateProgressBar();
+            }
+
+            function validateStep(stepIndex) {
+                const currentStepElement = steps[stepIndex];
+                const inputs = currentStepElement.querySelectorAll('input[required], textarea[required]');
+                let isValid = true;
+                inputs.forEach(input => {
+                    if ((input.type === 'text' || input.tagName.toLowerCase() === 'textarea') && !input.value.trim()) {
+                        isValid = false;
+                        input.classList.add('border-red-500', 'focus:ring-red-500');
+                    } else {
+                        input.classList.remove('border-red-500', 'focus:ring-red-500');
+                    }
+                });
+                const fieldsets = currentStepElement.querySelectorAll('fieldset');
+                fieldsets.forEach(fieldset => {
+                    const radio = fieldset.querySelector('input[type="radio"][required]');
+                    if (radio && !form.querySelector(`input[name="${radio.name}"]:checked`)) {
+                        isValid = false;
+                        fieldset.classList.add('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
+                    } else if (radio) {
+                        fieldset.classList.remove('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
+                    }
+                });
+                return isValid;
+            }
+
+            function showResponseScreen(state) {
+                surveyContainer.style.display = 'none';
+                responseScreen.style.display = 'block';
+
+                document.getElementById('success-icon').style.display = 'none';
+                document.getElementById('error-icon').style.display = 'none';
+                document.getElementById('loading-spinner').style.display = 'none';
+
+                const title = document.getElementById('response-title');
+                const subtitle = document.getElementById('response-subtitle');
+
+                switch (state) {
+                    case 'loading':
+                        document.getElementById('loading-spinner').style.display = 'block';
+                        title.textContent = translations[currentLang].submission_loading;
+                        subtitle.textContent = '...';
+                        resetBtn.style.display = 'none';
+                        break;
+                    case 'success':
+                        document.getElementById('success-icon').style.display = 'flex';
+                        title.textContent = translations[currentLang].thanks_title;
+                        subtitle.textContent = translations[currentLang].thanks_subtitle;
+                        resetBtn.style.display = 'inline-block';
+                        break;
+                    case 'error':
+                        document.getElementById('error-icon').style.display = 'flex';
+                        title.textContent = translations[currentLang].error_title;
+                        subtitle.textContent = translations[currentLang].error_subtitle;
+                        resetBtn.style.display = 'inline-block';
+                        break;
+                }
+            }
+
+            async function submitFormToSheetDB() {
+                // *** LINK API DI SHEETDB ***
+                const SHEETDB_API_URL = "https://sheetdb.io/api/v1/3m1ymae26ksx5?sheet=Risposte_Modulo_Feedback";
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                
+                // Aggiunge la data e la lingua al momento dell'invio
+                data.submittedAt = new Date().toLocaleString("it-IT", { timeZone: "Europe/Rome" });
+                data.language = currentLang;
+
                 try {
-                    const userCredential = await signInAnonymously(auth);
-                    userId = userCredential.user.uid;
-                    console.log("Utente autenticato anonimamente:", userId);
-                } catch (error) {
-                    console.error("Errore di autenticazione anonima:", error);
+                    const response = await fetch(SHEETDB_API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            data: [data] // SheetDB si aspetta un array di oggetti
+                        })
+                    });
+
+                    if (response.ok) {
+                        console.log("Dati inviati con successo a SheetDB.");
+                        showResponseScreen('success');
+                    } else {
+                        const errorData = await response.json();
+                        console.error("Errore durante l'invio a SheetDB:", errorData);
+                        showResponseScreen('error');
+                    }
+                } catch (e) {
+                    console.error("Errore di rete o di fetch:", e);
+                    showResponseScreen('error');
                 }
             }
-        });
 
-
-        // --- DIZIONARIO TRADUZIONI ---
-        const translations = {
-            it: {
-                lang_en: "English", main_title: "Il tuo parere è importante", main_subtitle: "Dedica un minuto a condividere la tua esperienza.",
-                step1_title: "Iniziamo...", company_name_label: "Nome Azienda Cliente", company_name_placeholder: "Es. Rossi S.p.A.",
-                exhibition_name_label: "Fiera di riferimento", exhibition_name_placeholder: "Es. Fiera del Mobile 2025",
-                step2_title: "Com'è andata l'esperienza generale?", overall_satisfaction_label: "Soddisfazione Generale del Servizio",
-                very_satisfied: "Molto Soddisfatto", satisfied: "Soddisfatto", fairly_satisfied: "Abbastanza", not_satisfied: "Per nulla",
-                designer_experience_label: "Esperienza con il nostro Designer", excellent: "Eccellente", good: "Buona", fair: "Sufficiente", poor: "Scarsa",
-                step3_title: "Valuta alcuni aspetti specifici...", design_quality_label: "Qualità Progettazione", meeting_needs_label: "Rispondenza Esigenze",
-                deadlines_label: "Rispetto Tempistiche", recommend_label: "Probabilità di Raccomandarci", not_likely: "Per nulla probabile", extremely_likely: "Estremamente probabile",
-                step4_title: "Ultime domande...", experience_feedback_label: "Cosa ti è piaciuto di più della nostra collaborazione?",
-                improvement_feedback_label: "C'è qualcosa che potremmo migliorare?", your_answer_placeholder: "La tua risposta...",
-                suggestion_placeholder: "Ogni suggerimento è prezioso...", prev_btn: "Indietro", next_btn: "Avanti", submit_btn: "Invia",
-                thanks_title: "Grazie!", thanks_subtitle: "Il tuo feedback è stato inviato. Ci aiuterà a migliorare ancora.",
-                reset_btn: "Invia un altro feedback", submission_loading: "Invio in corso...",
-                error_title: "Errore", error_subtitle: "Non è stato possibile inviare il tuo feedback. Riprova più tardi."
-            },
-            en: {
-                lang_it: "Italiano", main_title: "Your opinion is important", main_subtitle: "Take a minute to share your experience.",
-                step1_title: "Let's start...", company_name_label: "Company Name", company_name_placeholder: "E.g. Smith Inc.",
-                exhibition_name_label: "Exhibition Name", exhibition_name_placeholder: "E.g. Design Fair 2025",
-                step2_title: "How was the overall experience?", overall_satisfaction_label: "Overall Service Satisfaction",
-                very_satisfied: "Very Satisfied", satisfied: "Satisfied", fairly_satisfied: "Fairly", not_satisfied: "Not at all",
-                designer_experience_label: "Experience with our Designer", excellent: "Excellent", good: "Good", fair: "Fair", poor: "Poor",
-                step3_title: "Please rate some specific aspects...", design_quality_label: "Design Quality", meeting_needs_label: "Meeting of Needs",
-                deadlines_label: "Meeting of Deadlines", recommend_label: "Likelihood to Recommend", not_likely: "Not at all likely", extremely_likely: "Extremely likely",
-                step4_title: "Last questions...", experience_feedback_label: "What did you like most about our collaboration?",
-                improvement_feedback_label: "Is there anything we could improve?", your_answer_placeholder: "Your answer...",
-                suggestion_placeholder: "Every suggestion is valuable...", prev_btn: "Back", next_btn: "Next", submit_btn: "Submit",
-                thanks_title: "Thank you!", thanks_subtitle: "Your feedback has been submitted. It will help us improve.",
-                reset_btn: "Submit another feedback", submission_loading: "Submitting...",
-                error_title: "Error", error_subtitle: "Could not submit your feedback. Please try again later."
-            }
-        };
-        
-        let currentLang = 'it';
-        const langSwitchBtn = document.getElementById('lang-switch');
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.documentElement.lang = lang;
-            langSwitchBtn.innerHTML = `<span data-lang-key="${lang === 'it' ? 'lang_en' : 'lang_it'}">${translations[lang][lang === 'it' ? 'lang_en' : 'lang_it']}</span>`;
-            document.querySelectorAll('[data-lang-key]').forEach(el => {
-                const key = el.dataset.langKey;
-                if (translations[lang][key]) el.textContent = translations[lang][key];
-            });
-            document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
-                const key = el.dataset.langPlaceholder;
-                if (translations[lang][key]) el.placeholder = translations[lang][key];
-            });
-            updateButtons();
-        }
-
-        langSwitchBtn.addEventListener('click', () => setLanguage(currentLang === 'it' ? 'en' : 'it'));
-
-        // --- LOGICA DEL WIZARD ---
-        const steps = document.querySelectorAll('.form-step');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const progressBar = document.getElementById('progress-bar');
-        const form = document.getElementById('wizardForm');
-        const surveyContainer = document.getElementById('survey-container');
-        const responseScreen = document.getElementById('response-screen');
-        const resetBtn = document.getElementById('resetBtn');
-
-        let currentStep = 0;
-        const totalSteps = steps.length;
-
-        function updateButtons() {
-            prevBtn.style.visibility = (currentStep === 0) ? 'hidden' : 'visible';
-            nextBtn.textContent = (currentStep === totalSteps - 1) ? translations[currentLang].submit_btn : translations[currentLang].next_btn;
-        }
-        
-        function updateProgressBar() {
-            progressBar.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
-        }
-
-        function showStep(stepIndex) {
-            steps.forEach((step, index) => step.classList.toggle('active', index === stepIndex));
-            currentStep = stepIndex;
-            updateButtons();
-            updateProgressBar();
-        }
-
-        function validateStep(stepIndex) {
-            const currentStepElement = steps[stepIndex];
-            const inputs = currentStepElement.querySelectorAll('input[required], textarea[required]');
-            let isValid = true;
-            inputs.forEach(input => {
-                if ((input.type === 'text' || input.tagName.toLowerCase() === 'textarea') && !input.value.trim()) {
-                    isValid = false;
-                    input.classList.add('border-red-500', 'focus:ring-red-500');
+            nextBtn.addEventListener('click', async () => {
+                if (!validateStep(currentStep)) return;
+                if (currentStep < totalSteps - 1) {
+                    showStep(currentStep + 1);
                 } else {
-                    input.classList.remove('border-red-500', 'focus:ring-red-500');
+                    showResponseScreen('loading');
+                    await submitFormToSheetDB();
                 }
             });
-            const fieldsets = currentStepElement.querySelectorAll('fieldset');
-            fieldsets.forEach(fieldset => {
-                const radio = fieldset.querySelector('input[type="radio"][required]');
-                if (radio && !form.querySelector(`input[name="${radio.name}"]:checked`)) {
-                    isValid = false;
-                    fieldset.classList.add('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
-                } else if (radio) {
-                    fieldset.classList.remove('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
-                }
+
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 0) showStep(currentStep - 1);
             });
-            return isValid;
-        }
+            
+            resetBtn.addEventListener('click', () => {
+                form.reset();
+                responseScreen.style.display = 'none';
+                surveyContainer.style.display = 'block';
+                showStep(0);
+            });
 
-        function showResponseScreen(state) {
-            surveyContainer.style.display = 'none';
-            responseScreen.style.display = 'block';
-
-            document.getElementById('success-icon').style.display = 'none';
-            document.getElementById('error-icon').style.display = 'none';
-            document.getElementById('loading-spinner').style.display = 'none';
-
-            const title = document.getElementById('response-title');
-            const subtitle = document.getElementById('response-subtitle');
-
-            switch (state) {
-                case 'loading':
-                    document.getElementById('loading-spinner').style.display = 'block';
-                    title.textContent = translations[currentLang].submission_loading;
-                    subtitle.textContent = '...';
-                    resetBtn.style.display = 'none';
-                    break;
-                case 'success':
-                    document.getElementById('success-icon').style.display = 'flex';
-                    title.textContent = translations[currentLang].thanks_title;
-                    subtitle.textContent = translations[currentLang].thanks_subtitle;
-                    resetBtn.style.display = 'inline-block';
-                    break;
-                case 'error':
-                    document.getElementById('error-icon').style.display = 'flex';
-                    title.textContent = translations[currentLang].error_title;
-                    subtitle.textContent = translations[currentLang].error_subtitle;
-                    resetBtn.style.display = 'inline-block';
-                    break;
-            }
-        }
-
-        async function submitFormToFirebase() {
-            if (!db || !userId) {
-                console.error("Firebase non è inizializzato o l'utente non è autenticato.");
-                showResponseScreen('error');
-                return;
-            }
-
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            data.submittedAt = serverTimestamp();
-            data.language = currentLang;
-
-            try {
-                // Il percorso di salvataggio è stato semplificato per corrispondere
-                // alla configurazione della Cloud Function nella guida più recente.
-                const docRef = await addDoc(collection(db, "survey_responses"), data);
-                console.log("Documento scritto con ID: ", docRef.id);
-                showResponseScreen('success');
-            } catch (e) {
-                console.error("Errore durante l'aggiunta del documento: ", e);
-                showResponseScreen('error');
-            }
-        }
-
-        nextBtn.addEventListener('click', async () => {
-            if (!validateStep(currentStep)) return;
-            if (currentStep < totalSteps - 1) {
-                showStep(currentStep + 1);
-            } else {
-                showResponseScreen('loading');
-                await submitFormToFirebase();
-            }
+            setLanguage('it');
         });
-
-        prevBtn.addEventListener('click', () => {
-            if (currentStep > 0) showStep(currentStep - 1);
-        });
-        
-        resetBtn.addEventListener('click', () => {
-            form.reset();
-            responseScreen.style.display = 'none';
-            surveyContainer.style.display = 'block';
-            showStep(0);
-        });
-
-        setLanguage('it');
     </script>
 </body>
 </html>
