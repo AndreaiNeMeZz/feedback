@@ -1,188 +1,13 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedback sull'Evento</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Poppins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* MODIFICA: Sfondo del body reso trasparente */
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: transparent;
-        }
-        .form-step { display: none; animation: fadeIn 0.5s ease-in-out; }
-        .form-step.active { display: block; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .rating-radio-label { transition: all 0.2s ease-in-out; }
-        .rating-radio:checked + .rating-radio-label {
-            background-color: #2563eb; color: white; border-color: #2563eb;
-            transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .nps-radio:checked + .nps-label { background-color: #2563eb; color: white; border-color: #2563eb; }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border-left-color: #2563eb;
-            animation: spin 1s ease infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
-</head>
-<body class="antialiased text-gray-700">
-
-    <!-- MODIFICA: Rimosse le classi per la centratura e l'altezza minima per adattarsi all'iframe -->
-    <div class="container mx-auto px-4 py-8">
-        <div class="w-full max-w-2xl mx-auto">
-            
-            <div id="survey-container" class="bg-white rounded-xl shadow-2xl overflow-hidden relative">
-                 <!-- Pulsante Lingua -->
-                <div class="absolute top-4 right-4 z-10">
-                    <button id="lang-switch" class="text-sm font-semibold text-gray-500 hover:text-blue-600 transition-colors p-2 rounded-md">
-                        <span data-lang-key="lang_en">English</span>
-                    </button>
-                </div>
-                
-                <div class="p-8 pt-16">
-                    <!-- Intestazione e Barra di Avanzamento -->
-                    <div class="mb-8">
-                        <h2 class="text-2xl font-bold text-gray-800 text-center mb-2" data-lang-key="main_title">Il tuo parere è importante</h2>
-                        <p class="text-center text-gray-500 mb-6" data-lang-key="main_subtitle">Dedica un minuto a condividere la tua esperienza.</p>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 25%"></div>
-                        </div>
-                    </div>
-
-                    <!-- Form a Passaggi -->
-                    <form id="wizardForm">
-                        <!-- Step 1: Info Base -->
-                        <div id="step-1" class="form-step active">
-                            <h3 class="font-semibold text-xl text-gray-800 mb-6" data-lang-key="step1_title">Iniziamo...</h3>
-                            <div class="space-y-6">
-                                <div>
-                                    <label for="company_name" class="block text-sm font-medium text-gray-600 mb-1"><span data-lang-key="company_name_label">Nome Azienda Cliente</span> <span class="text-red-500">*</span></label>
-                                    <input type="text" id="company_name" name="company_name" required class="w-full p-3 bg-gray-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" data-lang-placeholder="company_name_placeholder">
-                                </div>
-                                <div>
-                                    <label for="exhibition_name" class="block text-sm font-medium text-gray-600 mb-1"><span data-lang-key="exhibition_name_label">Fiera di riferimento</span> <span class="text-red-500">*</span></label>
-                                    <input type="text" id="exhibition_name" name="exhibition_name" required class="w-full p-3 bg-gray-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" data-lang-placeholder="exhibition_name_placeholder">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Step 2: Soddisfazione Generale -->
-                        <div id="step-2" class="form-step">
-                             <h3 class="font-semibold text-xl text-gray-800 mb-6" data-lang-key="step2_title">Com'è andata l'esperienza generale?</h3>
-                             <div class="space-y-6">
-                                <fieldset>
-                                    <legend class="block text-sm font-medium text-gray-600 mb-2"><span data-lang-key="overall_satisfaction_label">Soddisfazione Generale del Servizio</span> <span class="text-red-500">*</span></legend>
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                        <div><input type="radio" name="overall_satisfaction" id="os_1" value="Molto Soddisfatto" required class="sr-only rating-radio"><label for="os_1" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="very_satisfied">Molto Soddisfatto</label></div>
-                                        <div><input type="radio" name="overall_satisfaction" id="os_2" value="Soddisfatto" class="sr-only rating-radio"><label for="os_2" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="satisfied">Soddisfatto</label></div>
-                                        <div><input type="radio" name="overall_satisfaction" id="os_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="os_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
-                                        <div><input type="radio" name="overall_satisfaction" id="os_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="os_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend class="block text-sm font-medium text-gray-600 mb-2"><span data-lang-key="designer_experience_label">Esperienza con il nostro Designer</span> <span class="text-red-500">*</span></legend>
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                        <div><input type="radio" name="designer_experience" id="de_1" value="Molto Soddisfatto" required class="sr-only rating-radio"><label for="de_1" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="excellent">Eccellente</label></div>
-                                        <div><input type="radio" name="designer_experience" id="de_2" value="Soddisfatto" class="sr-only rating-radio"><label for="de_2" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="good">Buona</label></div>
-                                        <div><input type="radio" name="designer_experience" id="de_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="de_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fair">Sufficiente</label></div>
-                                        <div><input type="radio" name="designer_experience" id="de_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="de_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="poor">Scarsa</label></div>
-                                    </div>
-                                </fieldset>
-                             </div>
-                        </div>
-
-                        <!-- Step 3: Valutazioni Specifiche -->
-                        <div id="step-3" class="form-step">
-                            <h3 class="font-semibold text-xl text-gray-800 mb-6" data-lang-key="step3_title">Valuta alcuni aspetti specifici...</h3>
-                            <div class="space-y-8">
-                                <fieldset>
-                                    <legend class="block text-sm font-medium text-gray-600 mb-2"><span data-lang-key="design_quality_label">Qualità Progettazione</span> <span class="text-red-500">*</span></legend>
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                        <div><input type="radio" name="design_quality" id="dq_1" value="Molto Soddisfatto" required class="sr-only rating-radio"><label for="dq_1" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="very_satisfied">Molto Soddisfatto</label></div>
-                                        <div><input type="radio" name="design_quality" id="dq_2" value="Soddisfatto" class="sr-only rating-radio"><label for="dq_2" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="satisfied">Soddisfatto</label></div>
-                                        <div><input type="radio" name="design_quality" id="dq_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="dq_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
-                                        <div><input type="radio" name="design_quality" id="dq_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="dq_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend class="block text-sm font-medium text-gray-600 mb-2"><span data-lang-key="meeting_needs_label">Rispondenza Esigenze</span> <span class="text-red-500">*</span></legend>
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                        <div><input type="radio" name="meeting_needs" id="mn_1" value="Molto Soddisfatto" required class="sr-only rating-radio"><label for="mn_1" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="very_satisfied">Molto Soddisfatto</label></div>
-                                        <div><input type="radio" name="meeting_needs" id="mn_2" value="Soddisfatto" class="sr-only rating-radio"><label for="mn_2" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="satisfied">Soddisfatto</label></div>
-                                        <div><input type="radio" name="meeting_needs" id="mn_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="mn_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
-                                        <div><input type="radio" name="meeting_needs" id="mn_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="mn_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend class="block text-sm font-medium text-gray-600 mb-2"><span data-lang-key="deadlines_label">Rispetto Tempistiche</span> <span class="text-red-500">*</span></legend>
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                        <div><input type="radio" name="meeting_deadlines" id="md_1" value="Molto Soddisfatto" required class="sr-only rating-radio"><label for="md_1" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="very_satisfied">Molto Soddisfatto</label></div>
-                                        <div><input type="radio" name="meeting_deadlines" id="md_2" value="Soddisfatto" class="sr-only rating-radio"><label for="md_2" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="satisfied">Soddisfatto</label></div>
-                                        <div><input type="radio" name="meeting_deadlines" id="md_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="md_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
-                                        <div><input type="radio" name="meeting_deadlines" id="md_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="md_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend class="block text-sm font-medium text-gray-600 mb-3"><span data-lang-key="recommend_label">Probabilità di Raccomandarci</span> <span class="text-red-500">*</span></legend>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="not_likely">Per nulla probabile</span>
-                                        <div class="flex justify-center items-center w-3/5 space-x-2">
-                                            <div><input type="radio" name="recommend_likelihood" id="nps_1" value="1" required class="sr-only nps-radio"><label for="nps_1" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">1</label></div>
-                                            <div><input type="radio" name="recommend_likelihood" id="nps_2" value="2" class="sr-only nps-radio"><label for="nps_2" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">2</label></div>
-                                            <div><input type="radio" name="recommend_likelihood" id="nps_3" value="3" class="sr-only nps-radio"><label for="nps_3" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">3</label></div>
-                                            <div><input type="radio" name="recommend_likelihood" id="nps_4" value="4" class="sr-only nps-radio"><label for="nps_4" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">4</label></div>
-                                            <div><input type="radio" name="recommend_likelihood" id="nps_5" value="5" class="sr-only nps-radio"><label for="nps_5" class="nps-label cursor-pointer flex items-center justify-center w-10 h-10 border rounded-full transition">5</label></div>
-                                        </div>
-                                        <span class="text-xs text-gray-500 text-center w-1/5" data-lang-key="extremely_likely">Estremamente probabile</span>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div>
-
-                        <!-- Step 4: Feedback Aperto -->
-                        <div id="step-4" class="form-step">
-                            <h3 class="font-semibold text-xl text-gray-800 mb-6" data-lang-key="step4_title">Ultime domande...</h3>
-                            <div class="space-y-6">
-                                <div>
-                                    <label for="experience_feedback" class="block text-sm font-medium text-gray-600 mb-1"><span data-lang-key="experience_feedback_label">Cosa ti è piaciuto di più della nostra collaborazione?</span> <span class="text-red-500">*</span></label>
-                                    <textarea id="experience_feedback" name="experience_feedback" rows="3" required class="w-full p-3 bg-gray-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" data-lang-placeholder="your_answer_placeholder"></textarea>
-                                </div>
-                                <div>
-                                    <label for="improvement_feedback" class="block text-sm font-medium text-gray-600 mb-1"><span data-lang-key="improvement_feedback_label">C'è qualcosa che potremmo migliorare?</span> <span class="text-red-500">*</span></label>
-                                    <textarea id="improvement_feedback" name="improvement_feedback" rows="3" required class="w-full p-3 bg-gray-100 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition" data-lang-placeholder="suggestion_placeholder"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
 
                 <!-- Navigazione -->
-                <div id="navigation" class="bg-gray-50 px-8 py-4 flex justify-between items-center">
-                    <button id="prevBtn" class="text-gray-600 font-semibold hover:text-gray-800 transition" data-lang-key="prev_btn">Indietro</button>
+                <div id="navigation" class="bg-transparent px-8 py-4 flex justify-between items-center border-t border-gray-700/50 mt-4">
+                    <button id="prevBtn" class="text-gray-300 font-semibold hover:text-white transition" data-lang-key="prev_btn">Indietro</button>
                     <button id="nextBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition transform hover:scale-105" data-lang-key="next_btn">Avanti</button>
                 </div>
             </div>
 
             <!-- Schermata di Risposta -->
-            <div id="response-screen" class="hidden text-center bg-white rounded-xl shadow-2xl p-12">
+            <div id="response-screen" class="hidden text-center bg-transparent p-12">
                  <!-- Icona Successo -->
                  <div id="success-icon" class="hidden w-16 h-16 bg-green-100 text-green-600 rounded-full items-center justify-center mx-auto mb-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -194,9 +19,9 @@
                  <!-- Spinner Caricamento -->
                  <div id="loading-spinner" class="hidden spinner mx-auto mb-6"></div>
                  
-                 <h2 id="response-title" class="text-3xl font-bold text-gray-800 mb-2"></h2>
-                 <p id="response-subtitle" class="text-gray-600 mb-8"></p>
-                 <button id="resetBtn" class="text-blue-600 font-semibold hover:underline" data-lang-key="reset_btn">Invia un altro feedback</button>
+                 <h2 id="response-title" class="text-3xl font-bold text-white mb-2"></h2>
+                 <p id="response-subtitle" class="text-gray-300 mb-8"></p>
+                 <button id="resetBtn" class="text-blue-400 font-semibold hover:underline" data-lang-key="reset_btn">Invia un altro feedback</button>
             </div>
 
         </div>
@@ -349,7 +174,7 @@
 
             async function submitFormToSheetDB() {
                 // *** LINK API DI SHEETDB ***
-                const SHEETDB_API_URL = "https://sheetdb.io/api/v1/3m1ymae26ksx5?sheet=Risposte_Modulo_Feedback";
+                const SHEETDB_API_URL = "https://sheetdb.io/api/v1/3m1ymae26ksx5?sheet=Risposte_del_modulo_FEEDBACK";
 
                 const formData = new FormData(form);
                 const data = Object.fromEntries(formData.entries());
