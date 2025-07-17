@@ -12,9 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        /* MODIFICA: Sfondo del body reso trasparente */
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f7fafc;
+            background-color: transparent;
         }
         .form-step { display: none; animation: fadeIn 0.5s ease-in-out; }
         .form-step.active { display: block; }
@@ -44,8 +45,9 @@
 </head>
 <body class="antialiased text-gray-700">
 
-    <div class="container mx-auto px-4 py-8 md:py-16 flex items-center justify-center min-h-screen">
-        <div class="w-full max-w-2xl">
+    <!-- MODIFICA: Rimosse le classi per la centratura e l'altezza minima per adattarsi all'iframe -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="w-full max-w-2xl mx-auto">
             
             <div id="survey-container" class="bg-white rounded-xl shadow-2xl overflow-hidden relative">
                  <!-- Pulsante Lingua -->
