@@ -27,51 +27,66 @@
         .rating-radio-label { 
             transition: all 0.2s ease-in-out;
             border-color: #4b5563; /* Grigio più scuro per i bordi */
+            color: #d1d5db; /* Testo grigio chiaro */
         }
         .rating-radio:checked + .rating-radio-label {
-            background-color: #2563eb; color: white; border-color: #2563eb;
-            transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background-color: #a855f7; /* Viola per abbinarsi al sito */
+            color: white; 
+            border-color: #a855f7;
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .nps-radio:checked + .nps-label { background-color: #2563eb; color: white; border-color: #2563eb; }
+        .nps-radio:checked + .nps-label { 
+            background-color: #a855f7; 
+            color: white; 
+            border-color: #a855f7; 
+        }
         .nps-label {
             border-color: #4b5563;
+            color: #d1d5db;
         }
         .spinner {
             border: 4px solid rgba(255, 255, 255, 0.2);
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            border-left-color: #2563eb;
+            border-left-color: #a855f7;
             animation: spin 1s ease infinite;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        /* Aggiunge un effetto blur allo sfondo del contenitore */
+        .glass-container {
+            background-color: rgba(23, 23, 33, 0.6); /* Sfondo scuro semi-trasparente */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 <body class="antialiased text-gray-200">
 
-    <!-- MODIFICA: Rimosso padding verticale (py-8) per ridurre lo spazio e lo scroll -->
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-4 py-4">
         <div class="w-full max-w-2xl mx-auto">
             
-            <!-- MODIFICA: Rimosso sfondo e ombra dal contenitore principale -->
-            <div id="survey-container" class="bg-transparent rounded-xl overflow-hidden relative">
-                 <!-- Pulsante Lingua -->
-                <div class="absolute top-0 right-0 z-10">
-                    <button id="lang-switch" class="text-sm font-semibold text-gray-400 hover:text-white transition-colors p-2 rounded-md">
+            <!-- MODIFICA: Aggiunta la classe 'glass-container' per l'effetto vetro smerigliato -->
+            <div id="survey-container" class="glass-container rounded-xl overflow-hidden relative">
+                 <!-- MODIFICA: Reso il pulsante lingua più visibile -->
+                <div class="absolute top-4 right-4 z-10">
+                    <button id="lang-switch" class="text-sm font-semibold text-gray-300 hover:text-white hover:underline transition-colors p-2 rounded-md">
                         <span data-lang-key="lang_en">English</span>
                     </button>
                 </div>
                 
-                <div class="p-8 pt-12">
+                <div class="p-8 pt-16">
                     <!-- Intestazione e Barra di Avanzamento -->
                     <div class="mb-8">
                         <h2 class="text-2xl font-bold text-white text-center mb-2" data-lang-key="main_title">Il tuo parere è importante</h2>
                         <p class="text-center text-gray-400 mb-6" data-lang-key="main_subtitle">Dedica un minuto a condividere la tua esperienza.</p>
                         <div class="w-full bg-gray-700 rounded-full h-2.5">
-                            <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 25%"></div>
+                            <div id="progress-bar" class="bg-purple-500 h-2.5 rounded-full transition-all duration-500" style="width: 25%"></div>
                         </div>
                     </div>
 
@@ -83,11 +98,11 @@
                             <div class="space-y-6">
                                 <div>
                                     <label for="company_name" class="block text-sm font-medium text-gray-300 mb-1"><span data-lang-key="company_name_label">Nome Azienda Cliente</span> <span class="text-red-500">*</span></label>
-                                    <input type="text" id="company_name" name="company_name" required class="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-gray-700/50 transition text-white" data-lang-placeholder="company_name_placeholder">
+                                    <input type="text" id="company_name" name="company_name" required class="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-gray-700/50 transition text-white" data-lang-placeholder="company_name_placeholder">
                                 </div>
                                 <div>
                                     <label for="exhibition_name" class="block text-sm font-medium text-gray-300 mb-1"><span data-lang-key="exhibition_name_label">Fiera di riferimento</span> <span class="text-red-500">*</span></label>
-                                    <input type="text" id="exhibition_name" name="exhibition_name" required class="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-gray-700/50 transition text-white" data-lang-placeholder="exhibition_name_placeholder">
+                                    <input type="text" id="exhibition_name" name="exhibition_name" required class="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-gray-700/50 transition text-white" data-lang-placeholder="exhibition_name_placeholder">
                                 </div>
                             </div>
                         </div>
@@ -171,11 +186,11 @@
                             <div class="space-y-6">
                                 <div>
                                     <label for="experience_feedback" class="block text-sm font-medium text-gray-300 mb-1"><span data-lang-key="experience_feedback_label">Cosa ti è piaciuto di più della nostra collaborazione?</span> <span class="text-red-500">*</span></label>
-                                    <textarea id="experience_feedback" name="experience_feedback" rows="3" required class="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-gray-700/50 transition text-white" data-lang-placeholder="your_answer_placeholder"></textarea>
+                                    <textarea id="experience_feedback" name="experience_feedback" rows="3" required class="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-gray-700/50 transition text-white" data-lang-placeholder="your_answer_placeholder"></textarea>
                                 </div>
                                 <div>
                                     <label for="improvement_feedback" class="block text-sm font-medium text-gray-300 mb-1"><span data-lang-key="improvement_feedback_label">C'è qualcosa che potremmo migliorare?</span> <span class="text-red-500">*</span></label>
-                                    <textarea id="improvement_feedback" name="improvement_feedback" rows="3" required class="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-gray-700/50 transition text-white" data-lang-placeholder="suggestion_placeholder"></textarea>
+                                    <textarea id="improvement_feedback" name="improvement_feedback" rows="3" required class="w-full p-3 bg-gray-800/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-gray-700/50 transition text-white" data-lang-placeholder="suggestion_placeholder"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -183,9 +198,9 @@
                 </div>
 
                 <!-- Navigazione -->
-                <div id="navigation" class="bg-transparent px-8 py-4 flex justify-between items-center border-t border-gray-700/50 mt-4">
+                <div id="navigation" class="px-8 py-4 flex justify-between items-center border-t border-white/10 mt-4">
                     <button id="prevBtn" class="text-gray-300 font-semibold hover:text-white transition" data-lang-key="prev_btn">Indietro</button>
-                    <button id="nextBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition transform hover:scale-105" data-lang-key="next_btn">Avanti</button>
+                    <button id="nextBtn" class="bg-purple-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-purple-500 transition transform hover:scale-105" data-lang-key="next_btn">Avanti</button>
                 </div>
             </div>
 
@@ -204,7 +219,7 @@
                  
                  <h2 id="response-title" class="text-3xl font-bold text-white mb-2"></h2>
                  <p id="response-subtitle" class="text-gray-300 mb-8"></p>
-                 <button id="resetBtn" class="text-blue-400 font-semibold hover:underline" data-lang-key="reset_btn">Invia un altro feedback</button>
+                 <button id="resetBtn" class="text-purple-400 font-semibold hover:underline" data-lang-key="reset_btn">Invia un altro feedback</button>
             </div>
 
         </div>
@@ -357,7 +372,7 @@
 
             async function submitFormToSheetDB() {
                 // *** LINK API DI SHEETDB ***
-                const SHEETDB_API_URL = "https://sheetdb.io/api/v1/3m1ymae26ksx5?sheet=Risposte_del_modulo_FEEDBACK";
+                const SHEETDB_API_URL = "https://sheetdb.io/api/v1/3m1ymae26ksx5?sheet=Risposte_Modulo_Feedback";
 
                 const formData = new FormData(form);
                 const data = Object.fromEntries(formData.entries());
