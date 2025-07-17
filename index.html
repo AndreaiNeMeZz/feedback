@@ -130,6 +130,7 @@
                                         <div><input type="radio" name="overall_satisfaction" id="os_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="os_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
                                         <div><input type="radio" name="overall_satisfaction" id="os_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="os_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
                                     </div>
+                                    <div id="overall_satisfaction_error" class="text-red-400 text-sm mt-2 hidden" data-lang-key="error_selection_required">È richiesta una selezione.</div>
                                 </fieldset>
                                 <fieldset>
                                     <legend class="block text-sm font-medium text-gray-300 mb-2"><span data-lang-key="designer_experience_label">Esperienza con il nostro Designer</span> <span class="text-red-500">*</span></legend>
@@ -139,6 +140,7 @@
                                         <div><input type="radio" name="designer_experience" id="de_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="de_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fair">Sufficiente</label></div>
                                         <div><input type="radio" name="designer_experience" id="de_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="de_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="poor">Scarsa</label></div>
                                     </div>
+                                    <div id="designer_experience_error" class="text-red-400 text-sm mt-2 hidden" data-lang-key="error_selection_required">È richiesta una selezione.</div>
                                 </fieldset>
                              </div>
                         </div>
@@ -155,6 +157,7 @@
                                         <div><input type="radio" name="design_quality" id="dq_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="dq_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
                                         <div><input type="radio" name="design_quality" id="dq_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="dq_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
                                     </div>
+                                    <div id="design_quality_error" class="text-red-400 text-sm mt-2 hidden" data-lang-key="error_selection_required">È richiesta una selezione.</div>
                                 </fieldset>
                                 <fieldset>
                                     <legend class="block text-sm font-medium text-gray-300 mb-2"><span data-lang-key="meeting_needs_label">Rispondenza Esigenze</span> <span class="text-red-500">*</span></legend>
@@ -164,6 +167,7 @@
                                         <div><input type="radio" name="meeting_needs" id="mn_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="mn_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
                                         <div><input type="radio" name="meeting_needs" id="mn_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="mn_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
                                     </div>
+                                    <div id="meeting_needs_error" class="text-red-400 text-sm mt-2 hidden" data-lang-key="error_selection_required">È richiesta una selezione.</div>
                                 </fieldset>
                                 <fieldset>
                                     <legend class="block text-sm font-medium text-gray-300 mb-2"><span data-lang-key="deadlines_label">Rispetto Tempistiche</span> <span class="text-red-500">*</span></legend>
@@ -173,6 +177,7 @@
                                         <div><input type="radio" name="meeting_deadlines" id="md_3" value="Abbastanza Soddisfatto" class="sr-only rating-radio"><label for="md_3" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="fairly_satisfied">Abbastanza</label></div>
                                         <div><input type="radio" name="meeting_deadlines" id="md_4" value="Non Soddisfatto" class="sr-only rating-radio"><label for="md_4" class="rating-radio-label cursor-pointer block text-center p-4 border rounded-lg" data-lang-key="not_satisfied">Per nulla</label></div>
                                     </div>
+                                    <div id="meeting_deadlines_error" class="text-red-400 text-sm mt-2 hidden" data-lang-key="error_selection_required">È richiesta una selezione.</div>
                                 </fieldset>
                                 <fieldset>
                                     <legend class="block text-sm font-medium text-gray-300 mb-3"><span data-lang-key="recommend_label">Probabilità di Raccomandarci</span> <span class="text-red-500">*</span></legend>
@@ -187,6 +192,7 @@
                                         </div>
                                         <span class="text-xs text-gray-400 text-center w-1/5" data-lang-key="extremely_likely">Estremamente probabile</span>
                                     </div>
+                                    <div id="recommend_likelihood_error" class="text-red-400 text-sm mt-2 hidden text-center" data-lang-key="error_selection_required">È richiesta una selezione.</div>
                                 </fieldset>
                             </div>
                         </div>
@@ -254,7 +260,8 @@
                     suggestion_placeholder: "Ogni suggerimento è prezioso...", prev_btn: "Indietro", next_btn: "Avanti", submit_btn: "Invia",
                     thanks_title: "Grazie!", thanks_subtitle: "Il tuo feedback è stato inviato. Ci aiuterà a migliorare ancora.",
                     reset_btn: "Invia un altro feedback", submission_loading: "Invio in corso...",
-                    error_title: "Errore", error_subtitle: "Non è stato possibile inviare il tuo feedback. Riprova più tardi."
+                    error_title: "Errore", error_subtitle: "Non è stato possibile inviare il tuo feedback. Riprova più tardi.",
+                    error_selection_required: "È richiesta una selezione."
                 },
                 en: {
                     lang_it: "Italiano", main_title: "Your opinion is important", main_subtitle: "Take a minute to share your experience.",
@@ -270,7 +277,8 @@
                     suggestion_placeholder: "Every suggestion is valuable...", prev_btn: "Back", next_btn: "Next", submit_btn: "Submit",
                     thanks_title: "Thank you!", thanks_subtitle: "Your feedback has been submitted. It will help us improve.",
                     reset_btn: "Submit another feedback", submission_loading: "Submitting...",
-                    error_title: "Error", error_subtitle: "Could not submit your feedback. Please try again later."
+                    error_title: "Error", error_subtitle: "Could not submit your feedback. Please try again later.",
+                    error_selection_required: "A selection is required."
                 }
             };
             
@@ -338,11 +346,15 @@
                 const fieldsets = currentStepElement.querySelectorAll('fieldset');
                 fieldsets.forEach(fieldset => {
                     const radio = fieldset.querySelector('input[type="radio"][required]');
+                    const errorDiv = document.getElementById(`${radio.name}_error`);
+
                     if (radio && !form.querySelector(`input[name="${radio.name}"]:checked`)) {
                         isValid = false;
-                        fieldset.classList.add('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
+                        fieldset.classList.add('p-4', 'border', 'border-red-500', 'rounded-lg');
+                        if (errorDiv) errorDiv.classList.remove('hidden');
                     } else if (radio) {
-                        fieldset.classList.remove('border', 'border-red-500', 'rounded-lg', 'p-2', 'bg-red-50');
+                        fieldset.classList.remove('p-4', 'border', 'border-red-500', 'rounded-lg');
+                        if (errorDiv) errorDiv.classList.add('hidden');
                     }
                 });
                 return isValid;
